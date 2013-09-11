@@ -1,0 +1,12 @@
+WARNING: Phonon needs QCoreApplication::applicationName to be set to export audio output names through the DBUS interface 
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+kbuildsycoca4 running...
+kbuildsycoca4(4870) KBuildSycoca::checkTimestamps: checking file timestamps
+kbuildsycoca4(4870) KBuildSycoca::checkTimestamps: timestamps check ok
+kbuildsycoca4(4870) kdemain: Emitting notifyDatabaseChanged ()
+
+solution:
+you must include #include <QCoreApplication> when using phonon
+you must also    do   app.setApplicationName("PhononTest");

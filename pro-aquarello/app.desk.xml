@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+    <view>
+	<name>MainView</name>
+        <title>TCC PERU</title>
+	<slogan>TCC PERU</slogan>
+	<image>/home/pablo/workspace/dtcc1/html/kira.jpeg</image>
+	<waitingtime>4000</waitingtime>
+	<comment>This is for Main Frame</comment>
+    </view>
+    <view>
+	<name>FisrtView</name>
+        <image>/home/pablo/workspace/dtcc1/html/kira.jpeg</image>
+	<waitingtime>4000</waitingtime>
+	<comment>This is for Main Frame</comment>
+	<sponsor>Empresa X</sponsor>
+	<imagesponsor>/home/pablo/workspace/dtcc1/html/tcc.jpeg</imagesponsor>
+    </view>
+    <view>
+	<name>SecondView</name>
+        <image>/home/pablo/workspace/dtcc1/html/kira2.jpeg</image>
+	<waitingtime>4000</waitingtime>
+	<comment>This is for Main Frame</comment>
+	<sponsor>Empresa X</sponsor>
+	<imagesponsor>/home/pablo/workspace/dtcc1/html/tcc.jpeg</imagesponsor>
+    </view>
+    <view>
+	<name>ProductView</name>
+	<image>/home/pablo/workspace/dtcc1/html/tcc.jpeg</image>
+	<waitingtime>4000</waitingtime>
+	<comment>This is for Main Frame</comment>
+	<sponsor>Empresa X</sponsor>
+	<imagesponsor>/home/pablo/workspace/dtcc1/html/tcc.jpeg</imagesponsor>
+    </view>
+</app>

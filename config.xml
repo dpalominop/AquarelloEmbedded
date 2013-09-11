@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aquarello>
+   <aquarelloSettings>
+      <usingPictureCatalog>1</usingPictureCatalog>
+      <usingVideoCatalog>1</usingVideoCatalog>
+      <usingSoftPhone>1</usingSoftPhone>
+      <usingBarcodeScanner>1</usingBarcodeScanner>
+      <PortCOM>/dev/ttyACM0</PortCOM>
+      <BaudRate>9600</BaudRate>
+      <Terminal>Aquarelle</Terminal>
+      <ServerIP>192.168.100.6</ServerIP>
+      <ServerPort>1234</ServerPort>
+      <TimeCode>10</TimeCode>
+      <TimeSlide>15</TimeSlide>
+      <BaseURL>http://localhost/cgi-bin/demo.cgi?gencode=</BaseURL>
+      <Password>tccperu</Password>
+      <AppVersion>1.0.0_20130901</AppVersion>
+   </aquarelloSettings>
+</aquarello>

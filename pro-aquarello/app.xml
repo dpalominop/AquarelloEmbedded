@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+    <view>
+	<name>MainView</name>
+        <title>TCC PERU</title>
+	<slogan>Making the future now</slogan>
+	<image>/var/volatile/tmp/img/keira.png</image>
+	<waitingtime>15000</waitingtime>
+d	<comment>This is for Main Frame</comment>
+    </view>
+    <view>
+	<name>FirstView</name>
+d        <image>/var/volatile/tmp/img/keira4.png</image>
+	<waitingtime>15000</waitingtime>
+d	<comment>This is for First Frame</comment>
+d	<sponsor>Empresa</sponsor>
+d	<imagesponsor>/var/volatile/tmp/img/tcc-logo.png</imagesponsor>
+d	<commentsponsor>making the future happen!!</commentsponsor>
+    </view>
+    <view>
+	<name>SecondView</name>
+        <image>/var/volatile/tmp/img/keira2.png</image>
+	<waitingtime>15000</waitingtime>
+	<comment></comment>
+	<sponsor>Empresa X</sponsor>
+	<imagesponsor>/var/volatile/tmp/img/keira1.png</imagesponsor>
+	<commentsponsor>Empresa X</commentsponsor>
+    </view>
+    <view>
+	<name>ProductView</name>
+d	<image>/var/volatile/tmp/img/keira3.png</image>
+	<waitingtime>15000</waitingtime>
+d	<comment>This is for Main Frame</comment>
+d	<sponsor>Empresa X</sponsor>
+d	<imagesponsor>/var/volatile/tmp/img/keira.png</imagesponsor>
+d	<commentsponsor>Empresa X</commentsponsor>
+    </view>
+</app>
+formatos: jpeg, jpg, png, bmp, gif
+

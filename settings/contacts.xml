@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contacts>
+   <contact id="1" enabled="1">
+      <firstname>Daniel</firstname>
+      <surname>Palomino</surname>
+      <phone>157</phone>
+   </contact>
+   <contact id="2" enabled="1">
+      <firstname>Jorge</firstname>
+      <surname>Mendoza</surname>
+      <phone>110</phone>
+   </contact>
+   <contact id="3" enabled="1">
+      <firstname>Miguel</firstname>
+      <surname>Bello</surname>
+      <phone>125</phone>
+   </contact>
+   <contact id="4" enabled="1">
+      <firstname>John</firstname>
+      <surname>Doe</surname>
+      <phone>157</phone>
+   </contact>
+   <contact id="5" enabled="1">
+      <firstname>Jorge</firstname>
+      <surname>Mendoza</surname>
+      <phone>111</phone>
+   </contact>
+   <contact id="6" enabled="1">
+      <firstname>Miguel</firstname>
+      <surname>Bello</surname>
+      <phone>132</phone>
+   </contact>
+   <contact id="7" enabled="0">
+      <firstname>Nereida</firstname>
+      <surname>Garcia</surname>
+      <phone>130</phone>
+   </contact>
+   <contact id="8" enabled="1">
+      <firstname>Jorge</firstname>
+      <surname>Mendoza</surname>
+      <phone>134</phone>
+   </contact>
+</contacts>

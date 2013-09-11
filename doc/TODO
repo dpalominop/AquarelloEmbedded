@@ -1,0 +1,25 @@
+create aquarello.cfg with following parameters:
+
+usingPictureCatalog 	: 1
+usingVideoCatalog 	: 1
+usingBarcodeScanner	: 1
+usingSophtphone		: 1
+
+pictureCatalogDelay_ms	: 4000
+barcodeCatalogDelay_ms	: 5000
+
+create barcodescanner.cfg
+
+serialBaudrate : 9600
+serialPort: /dev/ttyUSB0   #create std::map for this
+
+add to sofpthoneSettings.cfg
+selfPreview		: 1 
+videoCall		: 0
+
+
+
+implemnet barcode class with seriacommunication inside
+
+fix transparent
+ button during call

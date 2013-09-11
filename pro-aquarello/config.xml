@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Aquarello>
+	<PortCOM>/dev/ttyS1</PortCOM>
+	<BaudRate>9600</BaudRate>
+	<Terminal>Aquarelle</Terminal>
+	<ServerIP>192.168.100.6</ServerIP>
+	<ServerPort>1234</ServerPort>
+	<TimeCode>10</TimeCode>
+	<TimeSlide>15</TimeSlide>
+</Aquarello>
