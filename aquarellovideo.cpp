@@ -89,11 +89,15 @@ AquarelloVideo::~AquarelloVideo()
     if(timer->isActive()){
         timer->stop();
     }
-    video_catalog->stopPlaylist();
-    video_catalog->deleteLater();
+    if(settings->usingVideoCatalog){
+        video_catalog->stopPlaylist();
+        video_catalog->deleteLater();
+    }
     barcode_catalog->stopScanning();
     barcode_catalog->deleteLater();
-    phoneWidget->exitSoftphone = TRUE;
+
+    if(settings->usingSoftPhone)
+        phoneWidget->exitSoftphone = TRUE;
     delay(3);
     qApp->quit();
     this->deleteLater();
@@ -219,6 +223,7 @@ void AquarelloVideo::initLayout()
         callHangupButton->resize(QImage(sellerButtonImagePath).size());
         //callHangupButton->adjustSize();
         callHangupButton->setHidden(true);
+        //this->setStyleSheet("QPushButton {border-radius: 60px;}");
     }
     else
     {
@@ -233,8 +238,8 @@ void AquarelloVideo::resizeCallHangupButton()
 
     float spacingFactor=1;
     QPoint callButtonPosition;
-    callButtonPosition.setX(spacingFactor*(this->width()-callHangupButton->width()));
-    callButtonPosition.setY(spacingFactor*(this->height()-callHangupButton->height()));
+    callButtonPosition.setX(spacingFactor*(this->width()-callHangupButton->width()-10));
+    callButtonPosition.setY(spacingFactor*(this->height()-callHangupButton->height()-10));
     callHangupButton->move(callButtonPosition);
 }
 
@@ -651,6 +656,9 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
                 wait_response->stackUnder(callHangupButton);
                 wait_response->lower();
 
+                callHangupButton->setIcon(QIcon(callButtonImagePath));
+                callHangupButton->setIconSize(QImage(callButtonImagePath).size());
+                callHangupButton->resize(QImage(callButtonImagePath).size());
                 resizeCallHangupButton();
 
                 break;
@@ -738,7 +746,7 @@ void AquarelloVideo::onTableCaller()
         aqState=AQUA_STATE::TABLE_CALLER;
         setStateEnviroment(aqState);
         launchStateEnviroment(aqState);
-        timer->start(); //add
+        //timer->start(); //add
         break;
 
     case AQUA_STATE::TABLE_CALLER:

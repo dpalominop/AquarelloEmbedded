@@ -60,4 +60,5 @@ OTHER_FILES += \
     settings/scanner.xml
 
 FORMS += \
-    widget_call.ui
+    widget_call.ui \
+    form.ui

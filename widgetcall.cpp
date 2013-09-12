@@ -26,12 +26,12 @@ WidgetCall::WidgetCall(QWidget *parent) :
     message = new QLabel(this);
     message->setObjectName(QStringLiteral("message"));
     message->setText("VOTRE APPEL CONCERNE:");
-    message->setStyleSheet(QStringLiteral("color: rgb(255, 0, 0);font: 75 18pt FreeSerif;"));
+    message->setStyleSheet(QStringLiteral("color: rgb(255, 0, 0);font: 75 30pt FreeSerif;"));
 
     //this->setStyleSheet("QPushButton {background-color:rgb(250, 249, 85); border-style: outset;border-width: 2px;border-radius: 30px;border-color: beige;color:black; font: 75 40pt Droid Sans; text-align:left;}");
-    this->setStyleSheet("QPushButton {background-color:rgb(250, 249, 85); border-style: outset;border-width: 2px;border-radius: 30px;border-color: beige;color:black; font: 75 40pt ms sans serif; text-align:left;}");
+    this->setStyleSheet("QPushButton {background-color:#FFA600;; border-style: outset;border-width: 2px;border-radius: 30px;border-color: beige;color:black; font: 75 italic 35pt Ubuntu Mono; text-align:left;}");
 
-    gridLayout_4->addWidget(message, 0, 0, 1, 1);
+    gridLayout_4->addWidget(message, 0, 0, 2, 2);
 
     dest_06 = new QPushButton(this);
     dest_06->setObjectName(QStringLiteral("dest_06"));
