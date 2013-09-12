@@ -58,7 +58,3 @@ OTHER_FILES += \
     settings/softphone.xml \
     settings/aquarello.xml \
     settings/scanner.xml
-
-FORMS += \
-    widget_call.ui \
-    form.ui
