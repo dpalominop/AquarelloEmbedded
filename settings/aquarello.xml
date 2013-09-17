@@ -2,7 +2,7 @@
 <aquarello>
     <aquarelloSettings>
         <usingPictureCatalog>0</usingPictureCatalog>
-        <usingVideoCatalog>0</usingVideoCatalog>
+        <usingVideoCatalog>1</usingVideoCatalog>
         <usingSoftPhone>1</usingSoftPhone>
         <usingBarcodeScanner>1</usingBarcodeScanner>
 	<Terminal>AQUARELLE</Terminal>

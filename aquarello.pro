@@ -17,7 +17,6 @@ HEADERS += \
     barcodescannersettings.h \
     softphone.h \
     widgetcall.h \
-    softphonewidget.h \
     serialcommunication.h \
     rs232.h \
     barcodescannersettings.h \
@@ -27,7 +26,9 @@ HEADERS += \
     linemessages.h \
     udpclient.h \
     udp_client.h \
-    audiocodecsettings.h
+    audiocodecsettings.h \
+    mybutton.h \
+    widgetviewer.h
 
 SOURCES += \
     main.cpp \
@@ -41,14 +42,15 @@ SOURCES += \
     barcodescannersettings.cpp \
     softphone.cpp \
     widgetcall.cpp \
-    softphonewidget.cpp \
     serialcommunication.cpp \
     rs232.cpp \
     tcpclient.cpp \
     display.cpp \
     linemessages.cpp \
     udpclient.cpp \
-    audiocodecsettings.cpp
+    audiocodecsettings.cpp \
+    mybutton.cpp \
+    widgetviewer.cpp
 
 QT       += core gui multimedia multimediawidgets network webkitwidgets v8
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

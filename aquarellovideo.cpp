@@ -32,7 +32,7 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
 
 
     this->EnableButton = TRUE;
-    this->callHangupButton = new QPushButton(this);
+    this->callHangupButton = new MyButton(this);
 
     timerTableCaller = new QTimer(this);
     timerTableCaller->setSingleShot(true);

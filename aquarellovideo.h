@@ -8,7 +8,6 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QObject>
-#include <QPushButton>
 #include <QStatusBar>
 #include <QTextEdit>
 #include <QVBoxLayout>
@@ -18,7 +17,7 @@
 #include <QFileSystemModel>
 #include <QDebug>
 #include <QtMultimedia/QMediaPlayer>
-#include <QtMultimediaWidgets/QVideoWidget>
+//#include <QtMultimediaWidgets/QVideoWidget>
 #include <QtMultimedia/QMediaPlaylist>
 //#include <QtWidgets/QGraphicsScene>
 //#include <QtWidgets/QGraphicsView>
@@ -35,6 +34,7 @@
 #include "softphone.h"
 #include "contactsettings.h"
 #include "barcodecatalog.h"
+#include "mybutton.h"
 #include <iostream>
 
 
@@ -107,7 +107,7 @@ private:
     BarcodeCatalog  * barcode_catalog;
     QLabel          * wait_response;
     Softphone       * phoneWidget;
-    QPushButton     * callHangupButton;
+    MyButton     * callHangupButton;
     QThread         * thread;
     ContactSettings * contacts;
 

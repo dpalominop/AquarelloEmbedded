@@ -1,4 +1,5 @@
-#include "aquarellovideo.h"
+#include "widgetviewer.h"
+//#include "aquarellovideo.h"
 
 void signalhandler(int sig){
     if(sig==SIGINT){
@@ -13,9 +14,13 @@ int main(int argc, char *argv[])
     app.setApplicationName("AquarelloVideo");
 //    app.setOverrideCursor(QCursor(Qt::BlankCursor));
 
-    AquarelloVideo win;
-    win.setWindowState(Qt::WindowFullScreen);
-    win.show();
+    //AquarelloVideo win;
+    //win.setWindowState(Qt::WindowFullScreen);
+    //win.show();
+    WidgetViewer widgetview;
+    widgetview.setWindowState(Qt::WindowFullScreen);
+    widgetview.show();
+
     signal(SIGINT, signalhandler);
     return app.exec();
 }

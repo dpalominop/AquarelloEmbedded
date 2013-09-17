@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QPushButton>
+#include "mybutton.h"
 #include <QLineEdit>
 
 class WidgetCall : public QWidget
@@ -15,15 +15,15 @@ public:
 
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout_4;
-    QPushButton *dest_01;
+    MyButton *dest_01;
     QLabel *message;
-    QPushButton *dest_06;
-    QPushButton *dest_07;
-    QPushButton *dest_03;
-    QPushButton *dest_05;
-    QPushButton *dest_02;
-    QPushButton *dest_04;
-    QPushButton *dest_08;
+    MyButton *dest_06;
+    MyButton *dest_07;
+    MyButton *dest_03;
+    MyButton *dest_05;
+    MyButton *dest_02;
+    MyButton *dest_04;
+    MyButton *dest_08;
     QSpacerItem *verticalSpacer;
     QGridLayout *gridLayout_2;
     QSpacerItem *horizontalSpacer_2;

@@ -13,7 +13,7 @@ WidgetCall::WidgetCall(QWidget *parent) :
     verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
     gridLayout_4 = new QGridLayout();
     gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-    dest_01 = new QPushButton(this);
+    dest_01 = new MyButton(this);
     dest_01->setObjectName(QStringLiteral("dest_01"));
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     sizePolicy.setHorizontalStretch(0);
@@ -33,7 +33,7 @@ WidgetCall::WidgetCall(QWidget *parent) :
 
     gridLayout_4->addWidget(message, 0, 0, 2, 2);
 
-    dest_06 = new QPushButton(this);
+    dest_06 = new MyButton(this);
     dest_06->setObjectName(QStringLiteral("dest_06"));
     QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
     sizePolicy1.setHorizontalStretch(0);
@@ -43,42 +43,42 @@ WidgetCall::WidgetCall(QWidget *parent) :
 
     gridLayout_4->addWidget(dest_06, 4, 1, 1, 1);
 
-    dest_07 = new QPushButton(this);
+    dest_07 = new MyButton(this);
     dest_07->setObjectName(QStringLiteral("dest_07"));
     sizePolicy1.setHeightForWidth(dest_07->sizePolicy().hasHeightForWidth());
     dest_07->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_07, 5, 0, 1, 1);
 
-    dest_03 = new QPushButton(this);
+    dest_03 = new MyButton(this);
     dest_03->setObjectName(QStringLiteral("dest_03"));
     sizePolicy1.setHeightForWidth(dest_03->sizePolicy().hasHeightForWidth());
     dest_03->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_03, 3, 0, 1, 1);
 
-    dest_05 = new QPushButton(this);
+    dest_05 = new MyButton(this);
     dest_05->setObjectName(QStringLiteral("dest_05"));
     sizePolicy1.setHeightForWidth(dest_05->sizePolicy().hasHeightForWidth());
     dest_05->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_05, 4, 0, 1, 1);
 
-    dest_02 = new QPushButton(this);
+    dest_02 = new MyButton(this);
     dest_02->setObjectName(QStringLiteral("dest_02"));
     sizePolicy1.setHeightForWidth(dest_02->sizePolicy().hasHeightForWidth());
     dest_02->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_02, 2, 1, 1, 1);
 
-    dest_04 = new QPushButton(this);
+    dest_04 = new MyButton(this);
     dest_04->setObjectName(QStringLiteral("dest_04"));
     sizePolicy1.setHeightForWidth(dest_04->sizePolicy().hasHeightForWidth());
     dest_04->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_04, 3, 1, 1, 1);
 
-    dest_08 = new QPushButton(this);
+    dest_08 = new MyButton(this);
     dest_08->setObjectName(QStringLiteral("dest_08"));
     sizePolicy1.setHeightForWidth(dest_08->sizePolicy().hasHeightForWidth());
     dest_08->setSizePolicy(sizePolicy1);
