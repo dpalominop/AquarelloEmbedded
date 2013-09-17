@@ -36,13 +36,18 @@ void BarcodeScannerSettings::fillSerialPortMap()
     serialPortMap["/dev/ttyS13"]=13;
     serialPortMap["/dev/ttyS14"]=14;
     serialPortMap["/dev/ttyS15"]=15;
-    serialPortMap["/dev/ttyACM0"]=16;
-    serialPortMap["/dev/ttyUSB0"]=17;
-    serialPortMap["/dev/ttyUSB1"]=18;
-    serialPortMap["/dev/ttyUSB2"]=19;
-    serialPortMap["/dev/ttyUSB3"]=20;
-    serialPortMap["/dev/ttyUSB4"]=21;
-    serialPortMap["/dev/ttyUSB5"]=22;
+    serialPortMap["/dev/ttyUSB0"]=16;
+    serialPortMap["/dev/ttyUSB1"]=17;
+    serialPortMap["/dev/ttyUSB2"]=18;
+    serialPortMap["/dev/ttyUSB3"]=19;
+    serialPortMap["/dev/ttyUSB4"]=20;
+    serialPortMap["/dev/ttyUSB5"]=21;
+    serialPortMap["/dev/ttyACM0"]=22;
+    serialPortMap["/dev/ttyACM1"]=23;
+    serialPortMap["/dev/ttyACM2"]=24;
+    serialPortMap["/dev/ttyACM3"]=25;
+    serialPortMap["/dev/ttyACM4"]=26;
+    serialPortMap["/dev/ttyACM5"]=27;
 
     serialPortMap["COM1"]=0;
     serialPortMap["COM2"]=1;

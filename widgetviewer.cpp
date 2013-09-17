@@ -16,7 +16,6 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
 
     AqVideo = new AquarelloVideo();
     WidgetItem = Scene.addWidget(AqVideo);
-    QObject::connect(AqVideo , SIGNAL(clicked()), this, SIGNAL(clicked()));
     //Scene.addItem(WidgetItem);
 
     QString PATH = QCoreApplication::applicationDirPath();
