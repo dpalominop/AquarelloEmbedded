@@ -200,7 +200,7 @@ void BarcodeCatalog::init()
     //connect(this,SIGNAL(catalogTimeout()),SLOT(startScanning()));
     //if(serialCom->isActive()) serialCom->scanContinuously();
 
-    if(QString::compare(settings->orientation,"portrait") == 0){
+    if(QString::compare(settings->orientation,"portrait", Qt::CaseInsensitive) == 0){
         this->resize(settings->height, settings->width);
     }else{
         this->resize(settings->width,settings->height);

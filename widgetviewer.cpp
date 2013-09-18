@@ -21,7 +21,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     QString PATH = QCoreApplication::applicationDirPath();
     AquarelloSettings screen(this, PATH + "/settings/aquarello.xml");
 
-    if(screen.orientation == QString("landscape")){
+    if(QString::compare(screen.orientation, "landscape", Qt::CaseInsensitive)==0){
         // Orientation fixed to landscape
         AqVideo->setFixedSize(screen.width, screen.height);
         Scene.setSceneRect(0, 0, screen.width, screen.height);
