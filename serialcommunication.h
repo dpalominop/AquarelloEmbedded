@@ -32,7 +32,6 @@ public:
 
     QString receivedString;
 
-
 signals:
     void timeoutScan();
     void newStringArrived(QString receivedString);

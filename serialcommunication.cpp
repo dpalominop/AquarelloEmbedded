@@ -23,12 +23,13 @@ SerialCommunication::~SerialCommunication()
 void SerialCommunication::initSerial()
 {
     setPort();
-    if(!portIsOpened){
-        vtimer = new QTimer();
-        vtimer->setInterval(5000);
-        connect(vtimer,SIGNAL(timeout()),this,SLOT(verifyPort()));
-        vtimer->start();
-    }else{
+
+    vtimer = new QTimer();
+    vtimer->setInterval(1000);
+    connect(vtimer,SIGNAL(timeout()),this,SLOT(verifyPort()));
+    vtimer->start();
+
+    if(portIsOpened){
         qDebug() << "READY SCAN";
         emit readyScan();
     }
@@ -90,7 +91,7 @@ void SerialCommunication::setPort()
 
     if(OpenComport(portNumber, baudRate))
     {
-      printf("WARNING: Can not open comport\n");
+      qDebug() << "WARNING: Can not open comport\n";
 
       portIsOpened=false;
     }
@@ -115,17 +116,20 @@ bool SerialCommunication::isRunningContiniously()
 
 void SerialCommunication::scanContinuously(int interval_ms)
 {
-    timer->start(interval_ms);
+    if(!timer->isActive())
+        timer->start(interval_ms);
 }
 void SerialCommunication::stopScanContinuously()
 {
     timer->stop();
 }
 void SerialCommunication::verifyPort(){
-    //qDebug() << "Verify Port Serial";
+
     setPort();
     if(portIsOpened){
-        vtimer->stop();
-        emit readyScan();
+        if (!timer->isActive())
+            emit readyScan();
+    }else{
+        timer->stop();
     }
 }
