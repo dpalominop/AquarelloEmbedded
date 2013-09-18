@@ -82,6 +82,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
                     display->setBackImgPath(backgroundPath);
                     display->createDisplayPage(htmlpage);
                     this->load(QUrl::fromLocalFile(htmlpage));
+                    //this->load(QUrl("http://192.168.100.3/view.html"));
                     //this->load(QUrl("http://www.google.com.pe"));
                     if(timer->isActive()){
                         qDebug() << "timer stop";

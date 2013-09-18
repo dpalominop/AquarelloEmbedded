@@ -132,8 +132,8 @@ void Display::createDisplayPageAqua(QString htmlpage)
 			list.append(backgroundColor(msglist[2]));
 			list.append(foregroundColor(msglist[3]));
 			list.append(QString("font-size:%1pt;").arg(msglist[4]));
-			list.append("font-family:arial;");
-			list.append(styleFont(msglist[5]));
+            list.append("font-family:arial;"); //msglist[5]
+            list.append(styleFont(msglist[6]));
                         //qDebug() << msglist[9];
 			if(msglist[9].indexOf((char)0xa4) > 0){
 				msglist[9] = msglist[9].replace(QChar('\xA4'),QString("&#8364"));
