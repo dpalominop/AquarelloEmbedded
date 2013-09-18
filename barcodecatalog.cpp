@@ -200,12 +200,12 @@ void BarcodeCatalog::init()
     //connect(this,SIGNAL(catalogTimeout()),SLOT(startScanning()));
     //if(serialCom->isActive()) serialCom->scanContinuously();
 
-    //if(QString::compare(settings->orientation,"portrait") == 0){
-    //    this->resize(settings->height, settings->width);
-    //}else{
-    //    this->resize(settings->width,settings->height);
-    //}
-    this->resize(settings->width,settings->height);
+    if(QString::compare(settings->orientation,"portrait") == 0){
+        this->resize(settings->height, settings->width);
+    }else{
+        this->resize(settings->width,settings->height);
+    }
+    //this->resize(settings->width,settings->height);
     this->page()->mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
     this->page()->mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     connect(this, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));

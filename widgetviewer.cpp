@@ -23,23 +23,23 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
 
     if(screen.orientation == QString("landscape")){
         // Orientation fixed to landscape
-        AqVideo->setFixedSize(1024, 768);
-        Scene.setSceneRect(0, 0, 1024, 768);
+        AqVideo->setFixedSize(screen.width, screen.height);
+        Scene.setSceneRect(0, 0, screen.width, screen.height);
         WidgetItem->setRotation(0);
-        WidgetItem->resize(QSizeF(1024, 768));
+        WidgetItem->resize(QSizeF(screen.width, screen.height));
         //WidgetItem->setGeometry(QRectF(0, 0, 1000, 700));
         //WidgetItem->setPos(QPointF(0, 1000));
     }else{
         // Orientation fixed to portrait
-        AqVideo->setFixedSize(768, 1024);
-        Scene.setSceneRect(0, 0, 1024, 768);
+        AqVideo->setFixedSize(screen.height, screen.width);
+        Scene.setSceneRect(0, 0, screen.width, screen.height);
         WidgetItem->setRotation(270);
-        WidgetItem->resize(QSizeF(768,1024));
-        WidgetItem->setGeometry(QRectF(0, 0, 768, 1024));
-        WidgetItem->setPos(QPointF(0, 768));
+        WidgetItem->resize(QSizeF(screen.height,screen.width));
+        WidgetItem->setGeometry(QRectF(0, 0, screen.height, screen.width));
+        WidgetItem->setPos(QPointF(0, screen.height));
     }
 
-    this->setFixedSize(1024, 768);
+    this->setFixedSize(screen.width, screen.height);
 
     WidgetItem->setAcceptTouchEvents(true);
     qApp->setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents, true);

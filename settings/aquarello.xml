@@ -11,6 +11,6 @@
         <TimeCode>10</TimeCode>
         <TimeSlide>5</TimeSlide>
 	<BaseURL>http://localhost/cgi-bin/demo.cgi?gencode=</BaseURL>
-	<Orientation>landscape</Orientation>
+        <Orientation>portrait</Orientation>
     </aquarelloSettings>
 </aquarello>
