@@ -82,7 +82,7 @@ int OpenComport(int comport_number, int baudrate)
   Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
   if(Cport[comport_number]==-1)
   {
-    perror("unable to open comport ");
+    printf ("unable to open comport: %s\n",strerror(errno));
     return(1);
   }
 
@@ -90,7 +90,7 @@ int OpenComport(int comport_number, int baudrate)
   if(error==-1)
   {
     close(Cport[comport_number]);
-    perror("unable to read portsettings ");
+    printf ("unable to read portsettings: %s\n",strerror(errno));
     return(1);
   }
   memset(&new_port_settings, 0, sizeof(new_port_settings));  /* clear the new struct */
@@ -106,7 +106,7 @@ int OpenComport(int comport_number, int baudrate)
   if(error==-1)
   {
     close(Cport[comport_number]);
-    perror("unable to adjust portsettings ");
+    printf ("unable to adjust portsettings: %s\n",strerror(errno));
     return(1);
   }
 
