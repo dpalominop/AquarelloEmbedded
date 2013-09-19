@@ -10,7 +10,6 @@ extern "C" {
 #include <errno.h>
 
 
-
 #ifdef __linux__
 
 #include <termios.h>
