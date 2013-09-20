@@ -11,6 +11,7 @@
 #include <QGuiApplication>
 #include <QGraphicsProxyWidget>
 #include "aquarellovideo.h"
+#include "widgetcall.h"
 
 class WidgetViewer : public QGraphicsView
 {
@@ -31,6 +32,7 @@ private:
     QGraphicsScene Scene;
     QGraphicsWidget *WidgetItem;
     AquarelloVideo *AqVideo;
+    WidgetCall *w;
 };
 
 #endif // WIDGETVIEWER_H

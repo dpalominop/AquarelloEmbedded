@@ -15,6 +15,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     AqVideo = new AquarelloVideo(this);
+    AqVideo->setParent(this, Qt::Window);
     WidgetItem = Scene.addWidget(AqVideo);
     //Scene.addItem(WidgetItem);
 
@@ -23,7 +24,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
 
     if(QString::compare(screen.orientation, "landscape", Qt::CaseInsensitive)==0){
         // Orientation fixed to landscape
-        AqVideo->setFixedSize(screen.width, screen.height);
+        //AqVideo->setFixedSize(screen.width, screen.height);
         Scene.setSceneRect(0, 0, screen.width, screen.height);
         WidgetItem->setRotation(0);
         WidgetItem->resize(QSizeF(screen.width, screen.height));
@@ -31,7 +32,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
         //WidgetItem->setPos(QPointF(0, 1000));
     }else{
         // Orientation fixed to portrait
-        AqVideo->setFixedSize(screen.height, screen.width);
+        //AqVideo->setFixedSize(screen.height, screen.width);
         Scene.setSceneRect(0, 0, screen.width, screen.height);
         WidgetItem->setRotation(270);
         WidgetItem->resize(QSizeF(screen.height,screen.width));
@@ -44,6 +45,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     WidgetItem->setAcceptTouchEvents(true);
     qApp->setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents, true);
     AqVideo->setAttribute(Qt::WA_AcceptTouchEvents, true);
+    //w->setAttribute(Qt::WA_AcceptTouchEvents, true);
 }
 
 bool WidgetViewer::event(QEvent * qevent)
