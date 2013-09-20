@@ -1,25 +1,6 @@
-create aquarello.cfg with following parameters:
+Para evitar que la inicialición del barcode scanner sea lento se debe desinstalar el paquete "modem-manger" usnado sudo apt-get purge modemmanager.
 
-usingPictureCatalog 	: 1
-usingVideoCatalog 	: 1
-usingBarcodeScanner	: 1
-usingSophtphone		: 1
+Para evitar que el sistema le cambio de nombre al barcode scanner en caso este inactivo por mucho tiempo, se debe crear la siguiente regla udev:
+SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", NAME="ttyACM0", OWNER="dpalominop", GROUP="dpalominop", MODE="0666"
+y ubicarlo en un archivo nuevo (rules.d/72-micro-devel.rules) en el directorio: /etc/udev/.
 
-pictureCatalogDelay_ms	: 4000
-barcodeCatalogDelay_ms	: 5000
-
-create barcodescanner.cfg
-
-serialBaudrate : 9600
-serialPort: /dev/ttyUSB0   #create std::map for this
-
-add to sofpthoneSettings.cfg
-selfPreview		: 1 
-videoCall		: 0
-
-
-
-implemnet barcode class with seriacommunication inside
-
-fix transparent
- button during call
