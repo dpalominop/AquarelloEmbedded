@@ -58,6 +58,7 @@ void SoftPhoneSettings::parseXML(QString XmlFile) {
     /* Removes any device() or data from the reader
      * and resets its internal state to the initial state. */
     xml.clear();
+    file.close();
     this->setSettings(Softphone);
 }
 

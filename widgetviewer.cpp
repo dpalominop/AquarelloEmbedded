@@ -14,7 +14,7 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    AqVideo = new AquarelloVideo();
+    AqVideo = new AquarelloVideo(this);
     WidgetItem = Scene.addWidget(AqVideo);
     //Scene.addItem(WidgetItem);
 

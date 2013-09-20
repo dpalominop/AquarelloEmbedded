@@ -30,6 +30,8 @@ void LogHandler(QtMsgType type, const QMessageLogContext& context, const QString
 
     QTextStream tStream(&file);
     tStream << text << endl;
+
+    file.close();
 }
 
 void signalhandler(int sig){
@@ -41,7 +43,7 @@ void signalhandler(int sig){
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    qInstallMessageHandler(LogHandler);
+    //qInstallMessageHandler(LogHandler);
     stdout = freopen("log.txt", "a+", stdout);
 
     qDebug() << "QApp Created" << endl;

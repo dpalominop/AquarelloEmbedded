@@ -192,8 +192,8 @@ void BarcodeCatalog::init()
     //settings = new BarcodeScannerSettings(this,"./settings/scanner.xml");
     //serialCom = new SerialCommunication(this,16,9600);//16=ttyUSB0 , 9600 bauds
     //serialCom = new SerialCommunication(this,settings->serialPort,settings->baudRate);
-    fillSerialPortMap();
-    serialCom = new SerialCommunication(this,serialPortMap.value(settings->portcom),settings->baudrate);
+    //fillSerialPortMap();
+    serialCom = new SerialCommunication(this,settings->portcom,settings->baudrate);
     connect(serialCom,SIGNAL(readyScan()),this,SLOT(startScanning()));
     connect(serialCom,SIGNAL(newStringArrived(QString)),this,SLOT(queryCatalog(QString)));
     serialCom->initSerial();
@@ -222,7 +222,7 @@ void BarcodeCatalog::startScanning()
     if(serialCom->isActive())
     {
         serialCom->scanContinuously(100);
-        std::cout << "Barcode Scanner : Scanning Continuosly" << std::endl;
+        qDebug() << "Barcode Scanner : Scanning Continuosly";
     }
 }
 
@@ -231,55 +231,6 @@ void BarcodeCatalog::stopScanning()
     if(serialCom->isActive()) serialCom->stopScanContinuously();
 }
 
-void BarcodeCatalog::fillSerialPortMap()
-{
-    serialPortMap["/dev/ttyS0"]=0;
-    serialPortMap["/dev/ttyS1"]=1;
-    serialPortMap["/dev/ttyS2"]=2;
-    serialPortMap["/dev/ttyS3"]=3;
-    serialPortMap["/dev/ttyS4"]=4;
-    serialPortMap["/dev/ttyS5"]=5;
-    serialPortMap["/dev/ttyS6"]=6;
-    serialPortMap["/dev/ttyS7"]=7;
-    serialPortMap["/dev/ttyS8"]=8;
-    serialPortMap["/dev/ttyS9"]=9;
-    serialPortMap["/dev/ttyS10"]=10;
-    serialPortMap["/dev/ttyS11"]=11;
-    serialPortMap["/dev/ttyS12"]=12;
-    serialPortMap["/dev/ttyS13"]=13;
-    serialPortMap["/dev/ttyS14"]=14;
-    serialPortMap["/dev/ttyS15"]=15;
-    serialPortMap["/dev/ttyUSB0"]=16;
-    serialPortMap["/dev/ttyUSB1"]=17;
-    serialPortMap["/dev/ttyUSB2"]=18;
-    serialPortMap["/dev/ttyUSB3"]=19;
-    serialPortMap["/dev/ttyUSB4"]=20;
-    serialPortMap["/dev/ttyUSB5"]=21;
-    serialPortMap["/dev/ttyACM0"]=22;
-    serialPortMap["/dev/ttyACM1"]=23;
-    serialPortMap["/dev/ttyACM2"]=24;
-    serialPortMap["/dev/ttyACM3"]=25;
-    serialPortMap["/dev/ttyACM4"]=26;
-    serialPortMap["/dev/ttyACM5"]=27;
-
-    serialPortMap["COM1"]=0;
-    serialPortMap["COM2"]=1;
-    serialPortMap["COM3"]=2;
-    serialPortMap["COM4"]=3;
-    serialPortMap["COM5"]=4;
-    serialPortMap["COM6"]=5;
-    serialPortMap["COM7"]=6;
-    serialPortMap["COM8"]=7;
-    serialPortMap["COM9"]=8;
-    serialPortMap["COM10"]=9;
-    serialPortMap["COM11"]=10;
-    serialPortMap["COM12"]=11;
-    serialPortMap["COM13"]=12;
-    serialPortMap["COM14"]=13;
-    serialPortMap["COM15"]=14;
-    serialPortMap["COM16"]=15;
-
-}
 void BarcodeCatalog::finishLoading(bool){
 
     //qDebug() << "FINISH Loading...";

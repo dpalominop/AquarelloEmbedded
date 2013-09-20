@@ -14,12 +14,9 @@ HEADERS += \
     aquarellosettings.h \
     softphonesettings.h \
     contactsettings.h \
-    barcodescannersettings.h \
     softphone.h \
     widgetcall.h \
     serialcommunication.h \
-    rs232.h \
-    barcodescannersettings.h \
     barcodecatalog.h \
     tcpclient.h \
     display.h \
@@ -39,11 +36,9 @@ SOURCES += \
     aquarellosettings.cpp \
     softphonesettings.cpp \
     contactsettings.cpp \
-    barcodescannersettings.cpp \
     softphone.cpp \
     widgetcall.cpp \
     serialcommunication.cpp \
-    rs232.cpp \
     tcpclient.cpp \
     display.cpp \
     linemessages.cpp \
@@ -53,7 +48,7 @@ SOURCES += \
     widgetviewer.cpp
 
 QT       += core gui multimedia multimediawidgets network webkitwidgets v8
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets serialport
 
 OTHER_FILES += \
     settings/contacts.xml \

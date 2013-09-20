@@ -5,15 +5,14 @@
 #include <cstdio>
 #include <QTimer>
 #include <QDebug>
-
-#include "rs232.h"
+#include <QtSerialPort/QSerialPort>
 
 class SerialCommunication : public QObject
 {
     Q_OBJECT
 public:
 
-    explicit SerialCommunication(QObject *parent = 0, int portNumber=0, int baudRate=9600 );
+    explicit SerialCommunication(QObject *parent = 0, QString portName="/dev/ttyACM0", int baudRate=9600 );
 
     ~SerialCommunication();
 
@@ -41,15 +40,19 @@ public slots:
     void receiveString();
 private slots:
     void verifyPort();
+    void closeSerialPort();
+    void handleError(QSerialPort::SerialPortError error);
 
 private:
-    int portNumber;
+    QSerialPort *serial;
+    QString portName;
     int baudRate;
 
     unsigned char buffer[4096];
     int bufferSize;
     bool portIsOpened;
     bool runningContiniously;
+    int socknum=0;
 
     QTimer *timer;
     QTimer *vtimer;

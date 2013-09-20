@@ -57,7 +57,7 @@ private:
     AquarelloSettings *settings;
     void init();
     bool remote;
-    void fillSerialPortMap();
+    //void fillSerialPortMap();
     //void fillAllowedBaudRates();
     QMap<QString , int> serialPortMap;
     QString backgroundPath;
