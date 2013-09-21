@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     widgetview.show();
 
     signal(SIGINT, signalhandler);
+
     return app.exec();
 }
 

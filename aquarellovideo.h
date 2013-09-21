@@ -13,7 +13,6 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QTimer>
-#include <QTime>
 #include <QFileSystemModel>
 #include <QDebug>
 #include <QtMultimedia/QMediaPlayer>

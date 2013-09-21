@@ -14,8 +14,9 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    AqVideo = new AquarelloVideo(this);
-    AqVideo->setParent(this, Qt::Window);
+    AqVideo = new AquarelloVideo();
+    //AqVideo->setParent(this, Qt::Window);
+    AqVideo->setWindowFlags(Qt::Window);
     WidgetItem = Scene.addWidget(AqVideo);
     //Scene.addItem(WidgetItem);
 
@@ -45,48 +46,4 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     WidgetItem->setAcceptTouchEvents(true);
     qApp->setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents, true);
     AqVideo->setAttribute(Qt::WA_AcceptTouchEvents, true);
-    //w->setAttribute(Qt::WA_AcceptTouchEvents, true);
-}
-
-bool WidgetViewer::event(QEvent * qevent)
-{
-    /*if (qevent->type() == QEvent::Gesture) {
-       //return gestureEvent(static_cast<QGestureEvent*>(event));
-    }
-    else */if (qevent->type() == QEvent::TouchBegin) {
-       return touchBeginEvent(static_cast<QTouchEvent*>(qevent));
-    }
-    else if (qevent->type() == QEvent::TouchUpdate) {
-       return touchUpdateEvent(static_cast<QTouchEvent*>(qevent));
-    }
-    else if (qevent->type() == QEvent::TouchEnd) {
-       //return touchEndEvent(static_cast<QTouchEvent*>(event));
-    }else if (qevent->type() == QEvent::MouseButtonPress) {
-        qDebug() << "MP in QGRapchisView" << endl;
-     }
-
-    return QGraphicsView::event(qevent);
-}
-
-bool WidgetViewer::touchBeginEvent(QTouchEvent *qevent)
-{
-    qDebug() << "TB in QGraphicsView" << qevent;
-    qevent->accept();
-    return true;
-}
-
-bool WidgetViewer::touchUpdateEvent(QTouchEvent *qevent)
-{
-    qDebug() << "TU in QGraphicsView" << qevent;
-    return true;
-}
-
-void WidgetViewer::mousePressEvent(QGraphicsSceneMouseEvent *qevent)
-{
-    qDebug() << "MP in QGraphicsView" << qevent;
-}
-
-void WidgetViewer::mouseMoveEvent(QGraphicsSceneMouseEvent *qevent)
-{
-    qDebug() << "MM in QGraphicsView" << qevent;
 }

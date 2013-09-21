@@ -1,8 +1,6 @@
 #include "aquarellovideo.h"
 
 
-AquarelloVideo *AquarelloVideo::theInstance_;
-
 AquarelloVideo::AquarelloVideo(QWidget *parent)
 : QWidget(parent),
   welcome_catalog(new QLabel(this,Qt::Widget)),
@@ -13,8 +11,7 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
     QString PATH =QCoreApplication::applicationDirPath();
     settings = new AquarelloSettings(this, QString(PATH+"/settings/aquarello.xml"));
 
-    theInstance_ = this;
-    theInstance_->setWindowIcon(QIcon("icons/MainIcon.png"));
+    this->setWindowIcon(QIcon("icons/MainIcon.png"));
 
     if(settings->usingPictureCatalog)
         picture_catalog = new PictureCatalog(this);
@@ -260,6 +257,9 @@ void AquarelloVideo::resizeEvent(QResizeEvent *event)
         video_catalog->setMaximumSize(this->size());
         video_catalog->resize(this->size());
     }
+
+    barcode_catalog->setMaximumSize(this->size());
+    barcode_catalog->resize(this->size());
 
     if(settings->usingSoftPhone)
     {
@@ -724,11 +724,7 @@ bool AquarelloVideo::usingSoftphone()
 void AquarelloVideo::onEndCall()
 {
     qDebug() << "Call Ended FROM AQUARELLO";
-    //this->callHangupButton->setIcon(QIcon(callButtonImagePath));
-    this->callHangupButton->setIcon(QIcon(sellerButtonImagePath));
-    callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
-    callHangupButton->resize(QImage(sellerButtonImagePath).size());
-    resizeCallHangupButton();
+
     this->EnableButton = TRUE;
     onCallReleased();
 }

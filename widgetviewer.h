@@ -19,11 +19,6 @@ class WidgetViewer : public QGraphicsView
 public:
     explicit WidgetViewer(QWidget *parent = 0);
 
-    bool touchBeginEvent(QTouchEvent *qevent);
-    bool touchUpdateEvent(QTouchEvent *qevent);
-    void mousePressEvent(QGraphicsSceneMouseEvent *qevent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *qevent);
-    bool event(QEvent *qevent);
 signals:
     void clicked();
 public slots:

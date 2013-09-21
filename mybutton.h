@@ -16,11 +16,6 @@ public:
     explicit MyButton(QWidget *parent = 0);
 
     bool event(QEvent *qevent);
-    bool touchBeginEvent(QTouchEvent *qevent);
-    bool touchUpdateEvent(QTouchEvent *qevent);
-    void mousePressEvent(QGraphicsSceneMouseEvent *qevent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *qevent);
-    bool touchEndEvent(QTouchEvent *qevent);
 signals:
 
 public slots:

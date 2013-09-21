@@ -3,8 +3,6 @@
 BarcodeCatalog::BarcodeCatalog(QWidget *parent) :
     QWebView(parent)
 {
-    //this->resize((int)QApplication::desktop()->width(),(int)QApplication::desktop()->height());
-    //this->resize(900, 1600);
 }
 void BarcodeCatalog::setSettings(AquarelloSettings *settings)
 {
@@ -15,17 +13,8 @@ void BarcodeCatalog::start()
     init();
 }
 
-/*BarcodeCatalog::BarcodeCatalog(QWidget *parent, AquarelloSettings *settings) :
-    QWebView(parent)
-{
-    this->resize(1024,768);
-    this->settings = settings;
-    init();
-}
-*/
 void BarcodeCatalog::queryCatalog(QString barcode)
 {
-    //serialCom->stopScanContinuously();
     QString codigo = "";
     codigo = barcode.remove(QRegExp("[AF\\n\\t\\r]"));
     QRegExp r("^\\d+$");
@@ -189,24 +178,12 @@ void BarcodeCatalog::init()
     timer->setInterval(settings->barcodeCatalogDelay_ms);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this,SIGNAL(catalogTimeout()));
-    //settings = new BarcodeScannerSettings(this,"./settings/scanner.xml");
-    //serialCom = new SerialCommunication(this,16,9600);//16=ttyUSB0 , 9600 bauds
-    //serialCom = new SerialCommunication(this,settings->serialPort,settings->baudRate);
-    //fillSerialPortMap();
+
     serialCom = new SerialCommunication(this,settings->portcom,settings->baudrate);
     connect(serialCom,SIGNAL(readyScan()),this,SLOT(startScanning()));
     connect(serialCom,SIGNAL(newStringArrived(QString)),this,SLOT(queryCatalog(QString)));
     serialCom->initSerial();
 
-    //connect(this,SIGNAL(catalogTimeout()),SLOT(startScanning()));
-    //if(serialCom->isActive()) serialCom->scanContinuously();
-
-    if(QString::compare(settings->orientation,"portrait", Qt::CaseInsensitive) == 0){
-        this->resize(settings->height, settings->width);
-    }else{
-        this->resize(settings->width,settings->height);
-    }
-    //this->resize(settings->width,settings->height);
     this->page()->mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
     this->page()->mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     connect(this, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
