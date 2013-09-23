@@ -9,6 +9,7 @@
 #include <QString>
 #include <QTimer>
 #include <QDir>
+#include <QDebug>
 #include <QNetworkInterface>
 #include <QtMultimedia/QSound>
 #include "serialcommunication.h"

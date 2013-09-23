@@ -27,6 +27,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
     }
     remote=false;
     std::cout << "Barcode Catalog : " << barcode.toStdString() << std::endl;
+    PATH = QCoreApplication::applicationDirPath();
     QSound::play(PATH+"/sounds/beep.wav");
 
     if(codigo=="769903002503")
@@ -35,7 +36,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         if(timer->isActive()){
             timer->stop();
         }
-        std::cout << "Barcode Catalog : Quit request" << std::endl;
+        qDebug() << "Barcode Catalog : Quit request" << endl;
         emit quitRequest();
         return;
     }else if(codigo=="769903002008"){
@@ -50,55 +51,111 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         return;
 
     }
-        emit queryReceived();
 
-        if (QString::compare(settings->terminal,"Aquarelle",Qt::CaseInsensitive) == 0)
-        {
-            TcpClient *tcpclient = new TcpClient();
-            qDebug() << "ServerPort:" << settings->serverport;
-            tcpclient->Connect(settings->serverip,settings->serverport,5000);
-            if(tcpclient->isConnected()){
-                QString data = codigo+"\t"+QString(SERIALNMBR)+"\t"+QString(DEVICETYPEID)+"\t"+settings->localipaddr+"\t0\t\t\t\n";
-                tcpclient->senData(data.toLatin1());//initial parameter to wet app configuration
-                QString str=tcpclient->receiveData(5000);
-                qDebug()<<str;
-                Display *display =new Display();
-                display->setTerminal(settings->terminal);
-                //display->setForeImgPath(foregroundPath);
-                if(str.count()>0){
-                    QString htmlpage = VIEW_FILE;
-                    display->strData(str);
-                    display->setBackImgPath(backgroundPath);
-                    display->createDisplayPage(htmlpage);
-                    this->load(QUrl::fromLocalFile(htmlpage));
-                    //this->load(QUrl("http://192.168.100.3/view.html"));
-                    //this->load(QUrl("http://www.google.com.pe"));
-                    if(timer->isActive()){
-                        qDebug() << "timer stop";
-                        timer->stop();
-                    }
-                    timer->start();
+    emit queryReceived();
 
-                }else{
-                    emit catalogTimeout();
+    if (QString::compare(settings->terminal,"Aquarelle",Qt::CaseInsensitive) == 0)
+    {
+        TcpClient *tcpclient = new TcpClient();
+        qDebug() << "ServerPort:" << settings->serverport;
+        tcpclient->Connect(settings->serverip,settings->serverport,5000);
+        if(tcpclient->isConnected()){
+            QString data = codigo+"\t"+QString(SERIALNMBR)+"\t"+QString(DEVICETYPEID)+"\t"+settings->localipaddr+"\t0\t\t\t\n";
+            tcpclient->senData(data.toLatin1());//initial parameter to wet app configuration
+            QString str=tcpclient->receiveData(5000);
+            qDebug()<<str;
+            Display *display =new Display();
+            display->setTerminal(settings->terminal);
+            //display->setForeImgPath(foregroundPath);
+            if(str.count()>0){
+                QString htmlpage = VIEW_FILE;
+                display->strData(str);
+                display->setBackImgPath(backgroundPath);
+                display->createDisplayPage(htmlpage);
+                this->load(QUrl::fromLocalFile(htmlpage));
+                //this->load(QUrl("http://192.168.100.3/view.html"));
+                //this->load(QUrl("http://www.google.com.pe"));
+                if(timer->isActive()){
+                    qDebug() << "timer stop";
+                    timer->stop();
                 }
+                timer->start();
+
             }else{
                 emit catalogTimeout();
             }
-        }else if (QString::compare(settings->terminal,"Genio",Qt::CaseInsensitive) == 0){
-            UdpClient *udpclient = new UdpClient();
-            udpclient->Connect(settings->serverip,settings->serverport,5000);
-            //qDebug() << QString("%1").arg(manager->getBaudrate())+" "+manager->getServerip()+" "+QString("%1").arg(manager->getServerport());
-            QString data = "F"+codigo+"\t"+QString(SERIALNMBR)+"\t"+QString(DEVICETYPEID)+"\t0\t0\t0\t\t\n";
-            udpclient->senData(data.toLatin1());
-            QString str=udpclient->receiveData(5000);
-            //udpclient->closeAll();
-            qDebug()<<str;
+        }else{
+            emit catalogTimeout();
+        }
+    }else if (QString::compare(settings->terminal,"Genio",Qt::CaseInsensitive) == 0){
+        UdpClient *udpclient = new UdpClient();
+        udpclient->Connect(settings->serverip,settings->serverport,5000);
+        //qDebug() << QString("%1").arg(manager->getBaudrate())+" "+manager->getServerip()+" "+QString("%1").arg(manager->getServerport());
+        QString data = "F"+codigo+"\t"+QString(SERIALNMBR)+"\t"+QString(DEVICETYPEID)+"\t0\t0\t0\t\t\n";
+        udpclient->senData(data.toLatin1());
+        QString str=udpclient->receiveData(5000);
+        //udpclient->closeAll();
+        qDebug()<<str;
+        Display *display =new Display();
+        display->setTerminal(settings->terminal);
+        if(str.count()>0){
+            QString htmlpage = VIEW_FILE;
+            display->byteData(str.toLatin1());
+            display->setBackImgPath(backgroundPath);
+            display->createDisplayPage(htmlpage);
+            this->load(QUrl::fromLocalFile(htmlpage));
+            if(timer->isActive()){
+                qDebug() << "timer stop";
+                timer->stop();
+            }
+            timer->start();
+        }else{
+            emit catalogTimeout();
+        }
+    }else if (QString::compare(settings->terminal,"WEB",Qt::CaseInsensitive) == 0){
+        QString url = settings->baseurl+codigo;
+        //QString url = manager->getBaseURL();
+        qDebug() << url;
+        this->load(QUrl(url));
+        remote=true;
+    }else if (QString::compare(settings->terminal,"TCP-CRS",Qt::CaseInsensitive) == 0){
+        TcpClient *tcpclient = new TcpClient();
+        tcpclient->Connect(settings->serverip,settings->serverport,5000);
+        if(tcpclient->isConnected()){
+            QString data = "soeps~Message-Profile-Id=DIFDA|Table-Name=EAMITEMR|Key-Lower="+codigo+"|~";
+            int len = data.count();
+
+            QByteArray ba = intToByteArray(len);
+            tcpclient->senData(ba);
+            //QString data = codigo+"\t123456789012\t123456789012\t"+localipaddr+"\t0\t\t\t";
+            tcpclient->senData(data.toLatin1());//initial parameter to wet app configuration
+            QString str=tcpclient->receiveDataIBM(5000);
+                //qDebug()<<str;
             Display *display =new Display();
             display->setTerminal(settings->terminal);
             if(str.count()>0){
                 QString htmlpage = VIEW_FILE;
-                display->byteData(str.toLatin1());
+                //dis->strData(str);
+                QRegExp rxlen("^(.*)[~](.*)$");
+                QString procstr="";
+
+                int pos = rxlen.indexIn(str);
+                if (pos > -1) {
+                    //qDebug() << rxlen.cap(1);
+                    procstr = rxlen.cap(2);
+                    //qDebug() << procstr;
+                    display->clearFields();
+                    if(procstr.count() > 10){
+                        display->parseXML("NormalSaleItem",procstr);
+                    }else{
+                        display->setDataAccessFault(rxlen.cap(1));
+                    }
+
+                }else{
+                      display->setDataAccessFault("Not Found");
+                }
+                //qDebug() << dis->params[0]["ItemCode"];
+                //qDebug() << dis->params[0]["ItemName"];
                 display->setBackImgPath(backgroundPath);
                 display->createDisplayPage(htmlpage);
                 this->load(QUrl::fromLocalFile(htmlpage));
@@ -110,70 +167,17 @@ void BarcodeCatalog::queryCatalog(QString barcode)
             }else{
                 emit catalogTimeout();
             }
-        }else if (QString::compare(settings->terminal,"WEB",Qt::CaseInsensitive) == 0){
-            QString url = settings->baseurl+codigo;
-            //QString url = manager->getBaseURL();
-            qDebug() << url;
-            this->load(QUrl(url));
-            remote=true;
-        }else if (QString::compare(settings->terminal,"TCP-CRS",Qt::CaseInsensitive) == 0){
-            TcpClient *tcpclient = new TcpClient();
-            tcpclient->Connect(settings->serverip,settings->serverport,5000);
-            if(tcpclient->isConnected()){
-                QString data = "soeps~Message-Profile-Id=DIFDA|Table-Name=EAMITEMR|Key-Lower="+codigo+"|~";
-                int len = data.count();
-
-                QByteArray ba = intToByteArray(len);
-                tcpclient->senData(ba);
-                //QString data = codigo+"\t123456789012\t123456789012\t"+localipaddr+"\t0\t\t\t";
-                tcpclient->senData(data.toLatin1());//initial parameter to wet app configuration
-                QString str=tcpclient->receiveDataIBM(5000);
-                    //qDebug()<<str;
-                Display *display =new Display();
-                display->setTerminal(settings->terminal);
-                if(str.count()>0){
-                    QString htmlpage = VIEW_FILE;
-                    //dis->strData(str);
-                    QRegExp rxlen("^(.*)[~](.*)$");
-                    QString procstr="";
-
-                    int pos = rxlen.indexIn(str);
-                    if (pos > -1) {
-                        //qDebug() << rxlen.cap(1);
-                        procstr = rxlen.cap(2);
-                        //qDebug() << procstr;
-                        display->clearFields();
-                        if(procstr.count() > 10){
-                            display->parseXML("NormalSaleItem",procstr);
-                        }else{
-                            display->setDataAccessFault(rxlen.cap(1));
-                        }
-
-                    }else{
-                          display->setDataAccessFault("Not Found");
-                    }
-                    //qDebug() << dis->params[0]["ItemCode"];
-                    //qDebug() << dis->params[0]["ItemName"];
-                    display->setBackImgPath(backgroundPath);
-                    display->createDisplayPage(htmlpage);
-                    this->load(QUrl::fromLocalFile(htmlpage));
-                    if(timer->isActive()){
-                        qDebug() << "timer stop";
-                        timer->stop();
-                    }
-                    timer->start();
-                }else{
-                    emit catalogTimeout();
-                }
-            }else{
-                 emit catalogTimeout();
-            }
+        }else{
+             emit catalogTimeout();
+        }
 
     }
 }
 
 void BarcodeCatalog::init()
 {
+    PATH = QCoreApplication::applicationDirPath();
+
     timer = new QTimer(this);
     timer->setInterval(settings->barcodeCatalogDelay_ms);
     timer->setSingleShot(true);
@@ -191,7 +195,6 @@ void BarcodeCatalog::init()
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(linkClicked(QUrl)));
     this->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     backgroundPath=getBackground();
-    PATH = QCoreApplication::applicationDirPath();
 }
 
 void BarcodeCatalog::startScanning()

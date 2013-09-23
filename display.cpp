@@ -1157,7 +1157,7 @@ void Display::parseXML(QString tag, QString data) {
     }
     /* Error handling. */
     if(xml.hasError()) {
-        printf("Imposible parse config.xml\r\\n");
+        qDebug() << "Imposible parse config.xml\r\\n";
     }
     xml.clear();
 }

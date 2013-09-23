@@ -29,15 +29,18 @@ void SerialCommunication::initSerial()
     connect(serial, SIGNAL(error(QSerialPort::SerialPortError)), this,SLOT(handleError(QSerialPort::SerialPortError)));
 
     setPort();
+    vtimer = new QTimer();
+    vtimer->setInterval(5000);
+    //vtimer->setSingleShot(true);
+    connect(vtimer,SIGNAL(timeout()),this,SLOT(verifyPort()));
+
     if(!portIsOpened){
-        vtimer = new QTimer();
-        vtimer->setInterval(5000);
-        connect(vtimer,SIGNAL(timeout()),this,SLOT(verifyPort()));
         vtimer->start();
     }else{
             qDebug() << "READY SCAN";
             emit readyScan();
     }
+
     connect(timer,SIGNAL(timeout()),this,SLOT(receiveString()));
 }
 
@@ -61,7 +64,7 @@ void SerialCommunication::receiveString()
 
     if(data.size() > 0){
         receivedString = QString(data);
-        printf("serialCom:    New String arrived\n");
+        qDebug() << "serialCom:    New String arrived\n";
         emit newStringArrived(receivedString);
     }
 }
@@ -116,17 +119,13 @@ void SerialCommunication::handleError(QSerialPort::SerialPortError error)
         stopScanContinuously();
         closeSerialPort();
         portIsOpened = false;
-        if(!vtimer){
-            vtimer = new QTimer();
-            vtimer->setInterval(5000);
-            connect(vtimer,SIGNAL(timeout()),this,SLOT(verifyPort()));
-            vtimer->start();
-        }else{
-            if(vtimer->isActive()){
-                vtimer->stop();
-            }
-            vtimer->start();
+
+        if(vtimer->isActive()){
+            vtimer->stop();
         }
+        vtimer->start();
+    }else{
+        qDebug() << "error unhandled: " << error << serial->errorString()<< endl;
     }
 
 }

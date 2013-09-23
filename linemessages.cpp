@@ -357,14 +357,14 @@ void LineMessages::parseXML() {
     QFile* file = new QFile(PATH+"/"+LINEMSG_FILE);
     /* If we can't open it, let's show an error message. */
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-        printf("No se pudo abrir linemsg.xml\r\\n");
+        qDebug() << "No se pudo abrir linemsg.xml\r\\n";
         writeConfigDefault(PATH+"/"+LINEMSG_FILE);
         if(!file->open(QIODevice::ReadOnly | QIODevice::Text)){
             return;
         }
 
     }
-    printf("open welcome.xml\r\\n");
+    qDebug() << "open welcome.xml\r\\n";
     /* QXmlStreamReader takes any QIODevice. */
     QXmlStreamReader xml(file);
 
@@ -386,7 +386,7 @@ void LineMessages::parseXML() {
     }
     /* Error handling. */
     if(xml.hasError()) {
-        printf("Imposible parse config.xml\r\\n");
+        qDebug() << "Imposible parse config.xml\r\\n";
     }
     xml.clear();
     file->close();

@@ -46,18 +46,18 @@ void VideoCatalog::stopPlaylist()
 catalog_player->stop();
 videoCatalogCounter = 0;
 catalogIsFinished=true;
-printf("VideoCatalog : Video Stop Requested\n");
+qDebug() << "VideoCatalog : Video Stop Requested\n";
 }
 
 void VideoCatalog::pickState(QMediaPlayer::State state)
 {
     if(state == QMediaPlayer::StoppedState)
     {
-        printf("VideoCatalog : STOPPED state\n");
+        qDebug() << "VideoCatalog : STOPPED state\n";
     }
 }
 
 void VideoCatalog::printState(QMediaPlayer::State state)
 {
-    printf("Video Catalog : Video Qthread STARTED!");
+    qDebug() << "Video Catalog : Video Qthread STARTED!";
 }

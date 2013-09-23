@@ -36,10 +36,12 @@ static void stop(int signum){
         running=FALSE;
 }
 static void registration_state_changed(struct _LinphoneCore *lc, LinphoneProxyConfig *cfg, LinphoneRegistrationState cstate, const char *message){
-                printf("New registration state %s for user id [%s] at proxy [%s]\n"
-                                ,linphone_registration_state_to_string(cstate)
-                                ,linphone_proxy_config_get_identity(cfg)
-                                ,linphone_proxy_config_get_addr(cfg));
+                qDebug() << "New registration state "<< linphone_registration_state_to_string(cstate)
+                         << "for user id" << linphone_proxy_config_get_identity(cfg)
+                         << "at proxy " << linphone_proxy_config_get_addr(cfg) << endl;
+
+
+
 }
 
 static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCallState cstate, const char *msg){

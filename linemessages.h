@@ -6,6 +6,7 @@
 #include <QXmlStreamReader>
 #include <QTextStream>
 #include <QFile>
+#include <QDebug>
 
 #define LINEMSG_FILE "settings/linemsg.xml"
 
