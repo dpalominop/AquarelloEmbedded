@@ -115,6 +115,8 @@ private:
     QTimer *timer;
     QTimer *timerTableCaller;
 
+    QString PATH;
+
     void delay(int delay_sec);
     void initLayout();
     AQUA_STATE::AquarelloState aqState;
@@ -130,6 +132,7 @@ private:
     QString endCallButtonImagePath;
     QString sellerButtonImagePath;
     QString contactsBackImagePath;
+    QString returnBackImagePath;
 
 };
 

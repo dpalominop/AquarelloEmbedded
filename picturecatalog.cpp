@@ -1,13 +1,13 @@
 #include "picturecatalog.h"
 
-PictureCatalog::PictureCatalog(QWidget *parent) :
+PictureCatalog::PictureCatalog(QWidget *parent, QString dir) :
     QLabel(parent)
     ,catalogCounter(0)
     ,catalogSize(0)
-    ,picturesDir(new QDir(QCoreApplication::applicationDirPath()+"/catalog_pictures"))
     ,catalogIsFinished(false)
 
 {
+    picturesDir = new QDir(QCoreApplication::applicationDirPath()+"/catalog_pictures/"+dir);
     picturesDir->setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     picturesDir->setSorting(QDir::Size | QDir::Reversed);
 

@@ -28,7 +28,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
     remote=false;
     std::cout << "Barcode Catalog : " << barcode.toStdString() << std::endl;
     PATH = QCoreApplication::applicationDirPath();
-    QSound::play(PATH+"/sounds/beep.wav");
+    //QSound::play(PATH+"/sounds/beep.wav");
 
     if(codigo=="769903002503")
     {

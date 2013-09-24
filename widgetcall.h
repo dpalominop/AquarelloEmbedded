@@ -11,7 +11,7 @@ class WidgetCall : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetCall(QWidget *parent = 0);
+    explicit WidgetCall(QWidget *parent = 0, QString icon_background="/icons7/call_button_vide.png");
 
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout_4;

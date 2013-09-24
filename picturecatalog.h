@@ -11,7 +11,7 @@ class PictureCatalog : public QLabel
 {
     Q_OBJECT
 public:
-    explicit PictureCatalog(QWidget *parent = 0);
+    explicit PictureCatalog(QWidget *parent = 0, QString dir="portrait");
 
     void showNextPicture();
     bool catalogIsFinished;

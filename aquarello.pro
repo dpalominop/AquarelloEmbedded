@@ -1,6 +1,8 @@
 TEMPLATE = app
 TARGET = aquarello
 
+#include(src/libQtAV.pri)
+
 LIBS += -L/usr/lib/i386-linux-gnu \
     -llinphone \
     -lmediastreamer \
