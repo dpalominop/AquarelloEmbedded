@@ -80,7 +80,8 @@ void Softphone::process(void)
      linphone_core_add_proxy_config(lc,proxy_cfg); /*add proxy config to linphone core*/
      linphone_core_set_default_proxy(lc,proxy_cfg); /*set to default proxy*/
 
-     linphone_core_set_ringback(lc,"/usr/share/sounds/linphone/ringback.wav");
+     QByteArray path_ringback = (PATH+"/sounds/ringback.wav").toLatin1();
+     linphone_core_set_ringback(lc, path_ringback.data());
 
      //Enable codec of video (H264)
      linphonec_codec_disable(VIDEO,lc, -1);
