@@ -199,7 +199,7 @@ void AquarelloSettings::setSettings(QMap<QString, QString> &Aquarello)
     password = "tccperu";
     baseurl = "http://localhost/cgi-bin/demo.cgi?gencode=";
     appversion = APP_VERSION;
-    orientation = "landscape";
+    orientation = "portrait";
     width = 1024;
     height = 768;
 
@@ -221,8 +221,11 @@ void AquarelloSettings::setSettings(QMap<QString, QString> &Aquarello)
         if(Aquarello["BaseURL"]!="") baseurl = Aquarello["BaseURL"];
         if(Aquarello["Password"]!="") password = Aquarello["Password"];
         if(Aquarello["AppVersion"]!="") appversion = Aquarello["AppVersion"];
-        if(Aquarello["Orientation"]!="") orientation = Aquarello["Orientation"];
-
+        if(Aquarello["Orientation"]!="") {
+            if(QString::compare(Aquarello["Orientation"],"landscape",Qt::CaseInsensitive) == 0){
+                orientation = "landscape";
+            }
+        }
     }
 }
 

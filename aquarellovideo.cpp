@@ -11,14 +11,23 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
     PATH =QCoreApplication::applicationDirPath();
     settings = new AquarelloSettings(this, QString(PATH+"/settings/aquarello.xml"));
 
-    this->setWindowIcon(QIcon("icons/MainIcon.png"));
+    welcomeImagePath=getImageFilePath("welcome_picture/"+settings->orientation,"default_pictures","foreground");//appel_vendeur
+    callImagePath=getImageFilePath("softphone_pictures/"+settings->orientation,"default_pictures","call");
+    waitImagePath=getImageFilePath("softphone_pictures/"+settings->orientation,"default_pictures","please_wait");
+    contactsBackImagePath=getImageFilePath("softphone_pictures/"+settings->orientation,"default_pictures","appel_menu");
+    returnBackImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","back_button");
+    sellerButtonImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","call_button");
+    callButtonImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","call_button_vide");
+    endCallButtonImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","endcall_button");
+    callButtonVideImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","call_button_vide");
+    mainIconImagePath=getImageFilePath("icons/"+settings->orientation,"default_pictures","main_icon");
+
+    this->setWindowIcon(QIcon(mainIconImagePath));
 
     if(settings->usingPictureCatalog)
-        if(QString::compare(settings->orientation, "landscape", Qt::CaseInsensitive))
-            picture_catalog = new PictureCatalog(this,"landscape");
-        else
-            picture_catalog = new PictureCatalog(this,"portrait");
-
+    {
+        picture_catalog = new PictureCatalog(this,settings->orientation);
+    }
     if(settings->usingBarcodeScanner)
     {
         barcode_catalog = new BarcodeCatalog(this);
@@ -39,7 +48,7 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
 
     if(settings->usingSoftPhone)
     {
-            widgetcall = new WidgetCall(this, "/icons/call_button_vide.png");
+            widgetcall = new WidgetCall(this, callButtonVideImagePath);
             connect(timerTableCaller, SIGNAL(timeout()), this, SLOT(onTablereturn()));
             wait_response = new QLabel(this);
             contacts = new ContactSettings(this, PATH+"/settings/contacts.xml");
@@ -59,6 +68,8 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
             if(contacts->contacts[5]["enabled"].toInt()) connect( this->widgetcall->dest_06, SIGNAL(clicked()), this, SLOT(onCallButton_06()) );
             if(contacts->contacts[6]["enabled"].toInt()) connect( this->widgetcall->dest_07, SIGNAL(clicked()), this, SLOT(onCallButton_07()) );
             if(contacts->contacts[7]["enabled"].toInt()) connect( this->widgetcall->dest_08, SIGNAL(clicked()), this, SLOT(onCallButton_08()) );
+            if(contacts->contacts[8]["enabled"].toInt()) connect( this->widgetcall->dest_09, SIGNAL(clicked()), this, SLOT(onCallButton_09()) );
+            if(contacts->contacts[9]["enabled"].toInt()) connect( this->widgetcall->dest_10, SIGNAL(clicked()), this, SLOT(onCallButton_10()) );
 
             QObject::connect( this->phoneWidget, SIGNAL(signalEndCall()), this, SLOT(onEndCall()), Qt::DirectConnection );
             QObject::connect( this->phoneWidget, SIGNAL(signalConnectedCall()), this, SLOT(onCall()), Qt::DirectConnection );
@@ -126,23 +137,6 @@ void AquarelloVideo::initLayout()
 
     welcome_catalog->setHidden(false);
 
-    if(QString::compare(settings->orientation, "landscape", Qt::CaseInsensitive)==0){
-        welcomeImagePath=getImageFilePath("welcome_picture/landscape","default_pictures","appel_vendeur");
-        callImagePath=getImageFilePath("softphone_pictures/landscape","default_pictures","call");
-        waitImagePath=getImageFilePath("softphone_pictures/landscape","default_pictures","please-wait");
-        contactsBackImagePath=getImageFilePath("softphone_pictures/landscape","default_pictures","appel_menu");
-    }else{
-        welcomeImagePath=getImageFilePath("welcome_picture/portrait","default_pictures","appel_vendeur");
-        callImagePath=getImageFilePath("softphone_pictures/portrait","default_pictures","call");
-        waitImagePath=getImageFilePath("softphone_pictures/portrait","default_pictures","please-wait");
-        contactsBackImagePath=getImageFilePath("softphone_pictures/portrait","default_pictures","appel_menu");
-    }
-    returnBackImagePath=getImageFilePath("icons","default_pictures","back_button");
-    sellerButtonImagePath=getImageFilePath("icons","default_pictures","call_button");
-    callButtonImagePath=getImageFilePath("icons","default_pictures","call_button_vide");
-    endCallButtonImagePath=getImageFilePath("icons","default_pictures","endcall_button");
-
-
     if(settings->usingPictureCatalog)
     {
         picture_catalog->setMaximumSize(this->size());
@@ -189,38 +183,48 @@ void AquarelloVideo::initLayout()
 
         widgetcall->setMaximumSize(this->size());
         widgetcall->resize(this->size());
-       // widgetcall->dest_01->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_01->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_01->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_01->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_01->setText(contacts->contacts[0]["firstname"]+QString(" ")+contacts->contacts[0]["surname"]);
         if(!contacts->contacts[0]["enabled"].toInt()) widgetcall->dest_01->setHidden(true);
         //widgetcall->dest_02->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_02->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_02->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_02->setText(contacts->contacts[1]["firstname"]+QString(" ")+contacts->contacts[1]["surname"]);
         if(!contacts->contacts[1]["enabled"].toInt()) widgetcall->dest_02->setHidden(true);
-        widgetcall->dest_03->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_03->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_03->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_03->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_03->setText(contacts->contacts[2]["firstname"]+QString(" ")+contacts->contacts[2]["surname"]);
         if(!contacts->contacts[2]["enabled"].toInt()) widgetcall->dest_03->setHidden(true);
-        widgetcall->dest_04->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_04->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_04->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_04->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_04->setText(contacts->contacts[3]["firstname"]+QString(" ")+contacts->contacts[3]["surname"]);
         if(!contacts->contacts[3]["enabled"].toInt()) widgetcall->dest_04->setHidden(true);
-        widgetcall->dest_05->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_05->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_05->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_05->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_05->setText(contacts->contacts[4]["firstname"]+QString(" ")+contacts->contacts[4]["surname"]);
         if(!contacts->contacts[4]["enabled"].toInt()) widgetcall->dest_05->setHidden(true);
-        widgetcall->dest_06->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_06->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_06->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_06->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_06->setText(contacts->contacts[5]["firstname"]+QString(" ")+contacts->contacts[5]["surname"]);
         if(!contacts->contacts[5]["enabled"].toInt()) widgetcall->dest_06->setHidden(true);
-        widgetcall->dest_07->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_07->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_07->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_07->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_07->setText(contacts->contacts[6]["firstname"]+QString(" ")+contacts->contacts[6]["surname"]);
         if(!contacts->contacts[6]["enabled"].toInt()) widgetcall->dest_07->setHidden(true);
-        widgetcall->dest_08->setIconSize(QImage(callButtonImagePath).size());
-        widgetcall->dest_08->resize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_08->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_08->resize(QImage(callButtonImagePath).size());
         widgetcall->dest_08->setText(contacts->contacts[7]["firstname"]+QString(" ")+contacts->contacts[7]["surname"]);
         if(!contacts->contacts[7]["enabled"].toInt()) widgetcall->dest_08->setHidden(true);
+        //
+        //widgetcall->dest_09->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_09->resize(QImage(callButtonImagePath).size());
+        widgetcall->dest_09->setText(contacts->contacts[8]["firstname"]+QString(" ")+contacts->contacts[8]["surname"]);
+        if(!contacts->contacts[8]["enabled"].toInt()) widgetcall->dest_09->setHidden(true);
+        //widgetcall->dest_10->setIconSize(QImage(callButtonImagePath).size());
+        //widgetcall->dest_10->resize(QImage(callButtonImagePath).size());
+        widgetcall->dest_10->setText(contacts->contacts[9]["firstname"]+QString(" ")+contacts->contacts[9]["surname"]);
+        if(!contacts->contacts[9]["enabled"].toInt()) widgetcall->dest_10->setHidden(true);
+
         widgetcall->setHidden(true);
 
         callHangupButton->setIcon(QIcon());
@@ -957,6 +961,44 @@ void AquarelloVideo::onCallButton_08()
     }
     else{
         phoneWidget->evento=QString("Call,")+contacts->contacts[7]["phone"];
+        this->onWaitResponse();
+    }
+
+    qDebug() << "Call Started FROM AQUARELLO";
+}
+void AquarelloVideo::onCallButton_09()
+{
+    this->EnableButton = FALSE;
+
+    if(timer->isActive()){
+        timer->stop();
+    }
+
+    if (phoneWidget->IncomingEnabled){
+        phoneWidget->evento="AcceptingIncomingCall";
+        this->onWaitResponse();
+    }
+    else{
+        phoneWidget->evento=QString("Call,")+contacts->contacts[8]["phone"];
+        this->onWaitResponse();
+    }
+
+    qDebug() << "Call Started FROM AQUARELLO";
+}
+void AquarelloVideo::onCallButton_10()
+{
+    this->EnableButton = FALSE;
+
+    if(timer->isActive()){
+        timer->stop();
+    }
+
+    if (phoneWidget->IncomingEnabled){
+        phoneWidget->evento="AcceptingIncomingCall";
+        this->onWaitResponse();
+    }
+    else{
+        phoneWidget->evento=QString("Call,")+contacts->contacts[9]["phone"];
         this->onWaitResponse();
     }
 

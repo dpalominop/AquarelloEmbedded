@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QNetworkInterface>
 #include <QtMultimedia/QSound>
+#include <QProcess>
 #include "serialcommunication.h"
 //#include "barcodescannersettings.h"
 #include "aquarellosettings.h"
@@ -61,8 +62,9 @@ private:
     //void fillSerialPortMap();
     //void fillAllowedBaudRates();
     QMap<QString , int> serialPortMap;
-    QString backgroundPath;
-    QString getBackground();
+    QString backgroundImagePath;
+    //QString getBackground();
+    QString getImageFilePath(QString,QString,QString);
     QByteArray intToByteArray(int);
     void ReadCodeStatus(QString);
     QString PATH;

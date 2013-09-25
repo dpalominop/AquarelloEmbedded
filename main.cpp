@@ -44,11 +44,11 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     //qInstallMessageHandler(LogHandler);
-    stdout = freopen("log.txt", "a+", stdout);
+    //stdout = freopen("log.txt", "a+", stdout);
 
     qDebug() << "QApp Created" << endl;
     app.setApplicationName("AquarelloVideo");
-    //app.setOverrideCursor(QCursor(Qt::BlankCursor));
+    app.setOverrideCursor(QCursor(Qt::BlankCursor));
 
     WidgetViewer widgetview;
     widgetview.setWindowState(Qt::WindowFullScreen);

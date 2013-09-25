@@ -39,6 +39,16 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         qDebug() << "Barcode Catalog : Quit request" << endl;
         emit quitRequest();
         return;
+    }if(codigo=="769903001018"){
+        if(timer->isActive()){
+            qDebug() << "reboot timer stop";
+            timer->stop();
+        }
+        QString program = "sudo reboot";
+        QProcess *myProcess = new QProcess(this);
+        myProcess->execute(program);
+        return;
+
     }else if(codigo=="769903002008"){
         emit queryReceived();
 
@@ -70,7 +80,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
             if(str.count()>0){
                 QString htmlpage = VIEW_FILE;
                 display->strData(str);
-                display->setBackImgPath(backgroundPath);
+                display->setBackImgPath(backgroundImagePath);
                 display->createDisplayPage(htmlpage);
                 this->load(QUrl::fromLocalFile(htmlpage));
                 //this->load(QUrl("http://192.168.100.3/view.html"));
@@ -101,7 +111,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         if(str.count()>0){
             QString htmlpage = VIEW_FILE;
             display->byteData(str.toLatin1());
-            display->setBackImgPath(backgroundPath);
+            display->setBackImgPath(backgroundImagePath);
             display->createDisplayPage(htmlpage);
             this->load(QUrl::fromLocalFile(htmlpage));
             if(timer->isActive()){
@@ -156,7 +166,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
                 }
                 //qDebug() << dis->params[0]["ItemCode"];
                 //qDebug() << dis->params[0]["ItemName"];
-                display->setBackImgPath(backgroundPath);
+                display->setBackImgPath(backgroundImagePath);
                 display->createDisplayPage(htmlpage);
                 this->load(QUrl::fromLocalFile(htmlpage));
                 if(timer->isActive()){
@@ -194,7 +204,7 @@ void BarcodeCatalog::init()
     connect(this, SIGNAL(loadFinished(bool)), SLOT(adjustLocation()));
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(linkClicked(QUrl)));
     this->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-    backgroundPath=getBackground();
+    backgroundImagePath=getImageFilePath("scanner_pictures/"+settings->orientation,"default_pictures","background");
 }
 
 void BarcodeCatalog::startScanning()
@@ -240,22 +250,41 @@ void BarcodeCatalog::linkClicked(QUrl url){
 
 
 }
-QString BarcodeCatalog::getBackground()
+QString BarcodeCatalog::getImageFilePath(QString dirname,QString dirdefault, QString filename)
 {
-    QString PATH =QCoreApplication::applicationDirPath()+"/"+BACKFOREIMG_DIRECTORY;
+    QString PATH =QCoreApplication::applicationDirPath()+"/"+dirname;
     QString bname = "";
+    bool existfile = false;
+
     QDir dir(PATH);
          dir.setFilter(QDir::Files | QDir::NoSymLinks);
     QFileInfoList list = dir.entryInfoList();
 
-    QRegExp r("^background.[png|jpeg|jpg|bmp|gif]+$",Qt::CaseInsensitive);
-    //qDebug() << "SIZE="+QString("%1").arg(list.size());
+    QString pattern = QString("^%1.[png|jpeg|jpg|bmp|gif]+$").arg(filename);
+    QRegExp r(pattern,Qt::CaseInsensitive);
+
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
-        //qDebug() << fileInfo.fileName();
+
         if(r.exactMatch(fileInfo.fileName())){
-            bname=PATH+"/"+fileInfo.fileName();
+            bname=fileInfo.absoluteFilePath();
+            existfile = true;
             break;
+        }
+    }
+    if(!existfile){
+        PATH =QCoreApplication::applicationDirPath()+"/"+dirdefault;
+        QDir dirdef(PATH);
+             dirdef.setFilter(QDir::Files | QDir::NoSymLinks);
+        QFileInfoList listdef = dirdef.entryInfoList();
+        for (int p = 0; p < listdef.size(); ++p) {
+            QFileInfo fileInfoDef = listdef.at(p);
+
+            if(r.exactMatch(fileInfoDef.fileName())){
+                bname=fileInfoDef.absoluteFilePath();
+                existfile = true;
+                break;
+            }
         }
     }
     return bname;
@@ -319,7 +348,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
         list.append(QString("color:blue;"));
         list.append(QString("font-size:30pt;"));
         list.append("font-family:arial;");
-        list.append("font-style:italic;");
+        list.append("font-style:normal;");
         list.append(QString("'>ETH0 : \n%1\n</SPAN>\n").arg(ipaddr_eth0));
         posy+=yval;
     }
@@ -329,7 +358,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
         list.append(QString("color:blue;"));
         list.append(QString("font-size:30pt;"));
         list.append("font-family:arial;");
-        list.append("font-style:italic;");
+        list.append("font-style:normal;");
         list.append(QString("'>WLAN0 : \n%1\n</SPAN>\n").arg(ipaddr_wlan0));
         posy+=yval;
     }
@@ -338,7 +367,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>PortCOM : \n%1\n</SPAN>\n").arg(settings->portcom));
     posy+=yval;
 
@@ -347,7 +376,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>BaudRate : \n%1\n</SPAN>\n").arg(settings->baudrate));
     posy+=yval;
 
@@ -356,7 +385,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>Terminal : \n%1\n</SPAN>\n").arg(settings->terminal));
     posy+=yval;
 
@@ -365,7 +394,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>ServerIP : \n%1\n</SPAN>\n").arg(settings->serverip));
     posy+=yval;
 
@@ -374,7 +403,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>ServerPort : \n%1\n</SPAN>\n").arg(settings->serverport));
     posy+=yval;
 
@@ -383,7 +412,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>TimeCode : \n%1\n</SPAN>\n").arg(settings->barcodeCatalogDelay_ms));
     posy+=yval;
 
@@ -392,7 +421,7 @@ void BarcodeCatalog::ReadCodeStatus(QString htmlpage)
     list.append(QString("color:blue;"));
     list.append(QString("font-size:30pt;"));
     list.append("font-family:arial;");
-    list.append("font-style:italic;");
+    list.append("font-style:normal;");
     list.append(QString("'>TimeSlide : \n%1\n</SPAN>\n").arg(settings->pictureCatalogDelay_ms));
 
     list.append("</div>\n");

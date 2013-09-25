@@ -90,6 +90,8 @@ public slots:
     void onCallButton_06();
     void onCallButton_07();
     void onCallButton_08();
+    void onCallButton_09();
+    void onCallButton_10();
     void onHangupButton();
     void onAnswerButton();
     void onEndCall();
@@ -133,7 +135,8 @@ private:
     QString sellerButtonImagePath;
     QString contactsBackImagePath;
     QString returnBackImagePath;
-
+    QString callButtonVideImagePath;
+    QString mainIconImagePath;
 };
 
 

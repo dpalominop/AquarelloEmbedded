@@ -24,6 +24,8 @@ public:
     MyButton *dest_02;
     MyButton *dest_04;
     MyButton *dest_08;
+    MyButton *dest_09;
+    MyButton *dest_10;
     QSpacerItem *verticalSpacer;
     QGridLayout *gridLayout_2;
     QSpacerItem *horizontalSpacer_2;

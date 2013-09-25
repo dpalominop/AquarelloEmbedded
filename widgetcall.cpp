@@ -29,7 +29,7 @@ WidgetCall::WidgetCall(QWidget *parent, QString icon_background) :
     message->setStyleSheet(QStringLiteral("color: rgb(255, 0, 0);font: 75 30pt FreeSerif;"));
 
     //this->setStyleSheet(QString("QPushButton {background-image:url(%1);background-color:#FFA600; border-style: outset;border-width: 2px;border-radius: 30px;border-color: beige;color:black; font: 75 italic 35pt Ubuntu Mono; text-align:left;}").arg(QCoreApplication::applicationDirPath()+icon_background));
-    this->setStyleSheet(QString("QPushButton {background-image:url(%1);border-style: outset;border-width: 0px;border-radius: 30px;border-color: beige;color:black; font: 75 italic 35pt Ubuntu Mono; text-align:left;}").arg(QCoreApplication::applicationDirPath()+icon_background));
+    this->setStyleSheet(QString("QPushButton {border-image:url(%1);border-style: outset;color:black; font: 75 normal 25pt Ubuntu Mono; text-align:left; padding: 0 10px 0 50px;}").arg(icon_background));
 
 
     gridLayout_4->addWidget(message, 0, 0, 2, 2);
@@ -86,6 +86,21 @@ WidgetCall::WidgetCall(QWidget *parent, QString icon_background) :
     dest_08->setSizePolicy(sizePolicy1);
 
     gridLayout_4->addWidget(dest_08, 5, 1, 1, 1);
+    //
+    dest_09 = new MyButton(this);
+    dest_09->setObjectName(QStringLiteral("dest_09"));
+    //sizePolicy1.setHeightForWidth(dest_08->sizePolicy().hasHeightForWidth());
+    dest_09->setSizePolicy(sizePolicy1);
+
+    gridLayout_4->addWidget(dest_09, 6, 0, 1, 1);
+
+    dest_10 = new MyButton(this);
+    dest_10->setObjectName(QStringLiteral("dest_10"));
+    //sizePolicy1.setHeightForWidth(dest_08->sizePolicy().hasHeightForWidth());
+    dest_10->setSizePolicy(sizePolicy1);
+
+    gridLayout_4->addWidget(dest_10, 6, 1, 1, 1);
+    //
 
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
