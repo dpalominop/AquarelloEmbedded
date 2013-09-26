@@ -8,8 +8,8 @@
 	<Terminal>AQUARELLE</Terminal>
         <ServerIP>192.168.100.13</ServerIP>
 	<ServerPort>1234</ServerPort>
-        <TimeCode>20</TimeCode>
-        <TimeSlide>5</TimeSlide>
+        <TimeCode>5</TimeCode>
+        <TimeSlide>2</TimeSlide>
 	<BaseURL>http://localhost/cgi-bin/demo.cgi?gencode=</BaseURL>
         <Orientation>portrait</Orientation>
     </aquarelloSettings>

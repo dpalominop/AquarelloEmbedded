@@ -3,14 +3,13 @@
 TcpClient::TcpClient(QObject *parent) :
     QObject(parent)
 {
-
+    socket=new QTcpSocket(this);
 }
 
 
 void TcpClient::Connect(QString serverip,int  port,int Timeout)
 {
 
-    socket=new QTcpSocket(this);
     socket->connectToHost(serverip, port);
     qDebug()<< "try to connect server: "<< serverip << "by port: "<<port;
     if (!socket->waitForConnected(Timeout)) {

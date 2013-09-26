@@ -108,9 +108,12 @@ void BarcodeCatalog::serverConsulting(QString codigo)
             }else{
                 emit catalogTimeout();
             }
+            delete display;
         }else{
             emit catalogTimeout();
         }
+
+        delete tcpclient;
     }else if (QString::compare(settings->terminal,"Genio",Qt::CaseInsensitive) == 0){
         UdpClient *udpclient = new UdpClient();
         udpclient->Connect(settings->serverip,settings->serverport,5000);
@@ -136,6 +139,8 @@ void BarcodeCatalog::serverConsulting(QString codigo)
         }else{
             emit catalogTimeout();
         }
+        delete udpclient;
+        delete display;
     }else if (QString::compare(settings->terminal,"WEB",Qt::CaseInsensitive) == 0){
         QString url = settings->baseurl+codigo;
         //QString url = manager->getBaseURL();
@@ -194,7 +199,7 @@ void BarcodeCatalog::serverConsulting(QString codigo)
         }else{
              emit catalogTimeout();
         }
-
+        delete tcpclient;
     }qDebug() << "FINALIZO SERVER-CONSULTING";
 }
 
