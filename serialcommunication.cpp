@@ -60,7 +60,9 @@ void SerialCommunication::sendChar(char character)
 
 void SerialCommunication::receiveString()
 {
-    QByteArray data = serial->readAll();
+    //QByteArray data = serial->readAll();
+    QByteArray data = serial->readLine();
+
 
     if(data.size() > 0){
         receivedString = QString(data);
@@ -69,6 +71,11 @@ void SerialCommunication::receiveString()
     }
 }
 
+
+void SerialCommunication::serialClear()
+{
+    serial->clear();
+}
 void SerialCommunication::setPort()
 {
     if (serial->open(QIODevice::ReadWrite))

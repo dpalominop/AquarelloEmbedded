@@ -2,7 +2,14 @@
 
 BarcodeCatalog::BarcodeCatalog(QWidget *parent) :
     QWebView(parent)
-{
+{   myThread = new QThread;
+    PATH = QCoreApplication::applicationDirPath();
+    mySound = new QSound(PATH+"/sounds/beep.wav");
+    connect(this, SIGNAL(startSound()), mySound, SLOT(play()));
+    mySound->moveToThread(myThread);
+    myThread->start();
+
+    connect(this, SIGNAL(startServerConsulting(QString)), this, SLOT(serverConsulting(QString)));
 }
 void BarcodeCatalog::setSettings(AquarelloSettings *settings)
 {
@@ -26,9 +33,8 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         return;
     }
     remote=false;
-    std::cout << "Barcode Catalog : " << barcode.toStdString() << std::endl;
-    PATH = QCoreApplication::applicationDirPath();
-    //QSound::play(PATH+"/sounds/beep.wav");
+    qDebug() << "Barcode Catalog : " << codigo << endl;
+    QMetaObject::invokeMethod(this,"startSound", Qt::DirectConnection);
 
     if(codigo=="769903002503")
     {
@@ -62,8 +68,16 @@ void BarcodeCatalog::queryCatalog(QString barcode)
 
     }
 
+    qDebug() << "inicial query **************";
     emit queryReceived();
+    emit startServerConsulting(codigo);
+    qDebug() << "paso startServerConsulting" << endl;
+    serialCom->serialClear();
+}
 
+
+void BarcodeCatalog::serverConsulting(QString codigo)
+{qDebug() << "INCIA SERVER-CONSULTING";
     if (QString::compare(settings->terminal,"Aquarelle",Qt::CaseInsensitive) == 0)
     {
         TcpClient *tcpclient = new TcpClient();
@@ -181,7 +195,7 @@ void BarcodeCatalog::queryCatalog(QString barcode)
              emit catalogTimeout();
         }
 
-    }
+    }qDebug() << "FINALIZO SERVER-CONSULTING";
 }
 
 void BarcodeCatalog::init()
@@ -215,6 +229,7 @@ void BarcodeCatalog::startScanning()
         qDebug() << "Barcode Scanner : Scanning Continuosly";
     }
 }
+
 
 void BarcodeCatalog::stopScanning()
 {

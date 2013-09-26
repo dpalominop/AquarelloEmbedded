@@ -31,6 +31,8 @@ public:
 
     QString receivedString;
 
+    void serialClear();
+
 signals:
     void timeoutScan();
     void newStringArrived(QString receivedString);

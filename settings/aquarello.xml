@@ -6,7 +6,7 @@
         <usingSoftPhone>1</usingSoftPhone>
         <usingBarcodeScanner>1</usingBarcodeScanner>
 	<Terminal>AQUARELLE</Terminal>
-	<ServerIP>192.168.100.13</ServerIP>
+        <ServerIP>192.168.100.13</ServerIP>
 	<ServerPort>1234</ServerPort>
         <TimeCode>20</TimeCode>
         <TimeSlide>5</TimeSlide>

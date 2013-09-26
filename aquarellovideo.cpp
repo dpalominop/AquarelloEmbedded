@@ -305,9 +305,6 @@ void AquarelloVideo::delay(int delay_sec)
 
 void AquarelloVideo::onBarCodeInterruption()
 {
-    qDebug() << "RECIBIDO onBarCodeInterruption";
-    QSound::play(PATH+"/sounds/sound-scanner.wav");
-
     if(timer->isActive()){
         timer->stop();
     }

@@ -40,11 +40,14 @@ signals:
     void catalogTimeout();
     void queryReceived();
     void quitRequest();
+    void startSound();
+    void startServerConsulting(QString);
 
 public slots:
     void queryCatalog(QString barcodeNumber);
     void stopScanning();
     void startScanning();
+    void serverConsulting(QString codigo);
 
 private slots:
     void adjustLocation();
@@ -68,6 +71,8 @@ private:
     QByteArray intToByteArray(int);
     void ReadCodeStatus(QString);
     QString PATH;
+    QThread *myThread;
+    QSound *mySound;
 };
 
 #endif // BARCODECATALOG_H
