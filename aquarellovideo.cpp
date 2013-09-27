@@ -6,7 +6,6 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
   welcome_catalog(new QLabel(this,Qt::Widget)),
   timer(new QTimer(this)),
   aqState (AQUA_STATE::WELCOME)
-  //widgetcall(new WidgetCall(this))
 {
     PATH =QCoreApplication::applicationDirPath();
     settings = new AquarelloSettings(this, QString(PATH+"/settings/aquarello.xml"));
@@ -78,7 +77,6 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
             QObject::connect(thread, SIGNAL(started()), phoneWidget, SLOT(process()));
             QObject::connect(phoneWidget, SIGNAL(finished()), thread, SLOT(quit()) );
             QObject::connect(phoneWidget, SIGNAL(finished()), phoneWidget, SLOT(deleteLater()));
-            //connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
             QObject::connect(phoneWidget, SIGNAL(destroyed()), thread, SLOT(deleteLater()) );
 
     }
@@ -183,45 +181,34 @@ void AquarelloVideo::initLayout()
 
         widgetcall->setMaximumSize(this->size());
         widgetcall->resize(this->size());
-        //widgetcall->dest_01->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_01->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_01->setText(contacts->contacts[0]["firstname"]+QString(" ")+contacts->contacts[0]["surname"]);
         if(!contacts->contacts[0]["enabled"].toInt()) widgetcall->dest_01->setHidden(true);
-        //widgetcall->dest_02->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_02->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_02->setText(contacts->contacts[1]["firstname"]+QString(" ")+contacts->contacts[1]["surname"]);
         if(!contacts->contacts[1]["enabled"].toInt()) widgetcall->dest_02->setHidden(true);
-        //widgetcall->dest_03->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_03->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_03->setText(contacts->contacts[2]["firstname"]+QString(" ")+contacts->contacts[2]["surname"]);
         if(!contacts->contacts[2]["enabled"].toInt()) widgetcall->dest_03->setHidden(true);
-        //widgetcall->dest_04->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_04->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_04->setText(contacts->contacts[3]["firstname"]+QString(" ")+contacts->contacts[3]["surname"]);
         if(!contacts->contacts[3]["enabled"].toInt()) widgetcall->dest_04->setHidden(true);
-        //widgetcall->dest_05->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_05->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_05->setText(contacts->contacts[4]["firstname"]+QString(" ")+contacts->contacts[4]["surname"]);
         if(!contacts->contacts[4]["enabled"].toInt()) widgetcall->dest_05->setHidden(true);
-        //widgetcall->dest_06->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_06->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_06->setText(contacts->contacts[5]["firstname"]+QString(" ")+contacts->contacts[5]["surname"]);
         if(!contacts->contacts[5]["enabled"].toInt()) widgetcall->dest_06->setHidden(true);
-        //widgetcall->dest_07->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_07->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_07->setText(contacts->contacts[6]["firstname"]+QString(" ")+contacts->contacts[6]["surname"]);
         if(!contacts->contacts[6]["enabled"].toInt()) widgetcall->dest_07->setHidden(true);
-        //widgetcall->dest_08->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_08->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_08->setText(contacts->contacts[7]["firstname"]+QString(" ")+contacts->contacts[7]["surname"]);
         if(!contacts->contacts[7]["enabled"].toInt()) widgetcall->dest_08->setHidden(true);
-        //
-        //widgetcall->dest_09->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_09->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_09->setText(contacts->contacts[8]["firstname"]+QString(" ")+contacts->contacts[8]["surname"]);
         if(!contacts->contacts[8]["enabled"].toInt()) widgetcall->dest_09->setHidden(true);
-        //widgetcall->dest_10->setIconSize(QImage(callButtonImagePath).size());
-        //widgetcall->dest_10->resize(QImage(callButtonImagePath).size());
+
         widgetcall->dest_10->setText(contacts->contacts[9]["firstname"]+QString(" ")+contacts->contacts[9]["surname"]);
         if(!contacts->contacts[9]["enabled"].toInt()) widgetcall->dest_10->setHidden(true);
 
@@ -230,16 +217,13 @@ void AquarelloVideo::initLayout()
         callHangupButton->setIcon(QIcon());
         callHangupButton->setStyleSheet("QPushButton {border-style: outset;border-width: 0px;border-radius: 20px;border-color: beige;}");
 
-        //callHangupButton->setIcon(QIcon(callButtonImagePath));
         callHangupButton->setIcon(QIcon(sellerButtonImagePath));
         callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
         callHangupButton->resize(QImage(sellerButtonImagePath).size());
-        //callHangupButton->adjustSize();
+
         callHangupButton->setHidden(true);
-        //this->setStyleSheet("QPushButton {border-radius: 60px;}");
-    }
-    else
-    {
+
+    }else{
         callHangupButton->setHidden(true);
     }
 
@@ -247,8 +231,6 @@ void AquarelloVideo::initLayout()
 
 void AquarelloVideo::resizeCallHangupButton()
 {
-    //callHangupButton->adjustSize();
-
     float spacingFactor=1;
     QPoint callButtonPosition;
     callButtonPosition.setX(spacingFactor*(this->width()-callHangupButton->width()-10));
@@ -311,7 +293,6 @@ void AquarelloVideo::onBarCodeInterruption()
     aqState = AQUA_STATE::CATALOG_BARCODE;
     setStateEnviroment(aqState);
     launchStateEnviroment(aqState);
-    //timer->start();
 }
 
 void AquarelloVideo::videoFinished(QMediaPlayer::MediaStatus mediaStatus)
@@ -470,8 +451,7 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
                     timer->stop();
                 }
                 timer->start();
-                //if(!timer->isActive())  timer->start();
-                //Swiching State
+
                 if(settings->usingPictureCatalog)
                 {
                     aqState = AQUA_STATE::CATALOG_PICTURE ;
@@ -482,14 +462,10 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
                 if(settings->usingSoftPhone)
                 {
                     callHangupButton->setIcon(QIcon());
-                    //callHangupButton->setIcon(QIcon(callButtonImagePath));
                     callHangupButton->setIcon(QIcon(sellerButtonImagePath));
-                    //callHangupButton->setIconSize(QSize(280, 50));
                     callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
                     callHangupButton->resize(QImage(sellerButtonImagePath).size());
                     resizeCallHangupButton();
-                    //callHangupButton->setIconSize(QSize(callHangupButton->width(), callHangupButton->height()));
-                    //callHangupButton->resize(QImage(sellerButtonImagePath).size());
 
                     callHangupButton->raise();
                     welcome_catalog->stackUnder(callHangupButton);
@@ -505,14 +481,10 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
                 if(settings->usingSoftPhone)
                 {
                     callHangupButton->setIcon(QIcon());
-                    //callHangupButton->setIcon(QIcon(callButtonImagePath));
                     callHangupButton->setIcon(QIcon(sellerButtonImagePath));
-                    //callHangupButton->setIconSize(QSize(280, 50));
                     callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
                     callHangupButton->resize(QImage(sellerButtonImagePath).size());
                     resizeCallHangupButton();
-                    //callHangupButton->setIconSize(QSize(callHangupButton->width(), callHangupButton->height()));
-                    //callHangupButton->resize(QImage(sellerButtonImagePath).size());
 
                     callHangupButton->raise();
                     picture_catalog->stackUnder(callHangupButton);
@@ -541,14 +513,10 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
                 if(settings->usingSoftPhone)
                 {
                     callHangupButton->setIcon(QIcon());
-                    //callHangupButton->setIcon(QIcon(callButtonImagePath));
                     callHangupButton->setIcon(QIcon(sellerButtonImagePath));
-                    //callHangupButton->setIconSize(QSize(280, 50));
                     callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
                     callHangupButton->resize(QImage(sellerButtonImagePath).size());
                     resizeCallHangupButton();
-                    //callHangupButton->setIconSize(QSize(callHangupButton->width(), callHangupButton->height()));
-                    //callHangupButton->resize(QImage(sellerButtonImagePath).size());
 
                     callHangupButton->raise();
                     video_catalog->stackUnder(callHangupButton);
@@ -598,15 +566,10 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
 //                    aqState = AQUA_STATE::CATALOG_PICTURE;
                     callHangupButton->setIcon(QIcon());
                     callHangupButton->setIcon(QIcon(returnBackImagePath));
-                    //callHangupButton->setIconSize(QSize(100, 50));
                     callHangupButton->setIconSize(QImage(returnBackImagePath).size());
                     callHangupButton->resize(QImage(returnBackImagePath).size());
-                    //callHangupButton->adjustSize();
                     resizeCallHangupButton();
-                    //callHangupButton->setIconSize(QSize(callHangupButton->width(), callHangupButton->height()));
-                    //callHangupButton->resize(QImage(endCallButtonImagePath).size());
 
-                    //welcome_catalog->setPixmap(QPixmap::fromImage(QImage(callImagePath)));
                     welcome_catalog->setPixmap(QPixmap::fromImage(QImage(contactsBackImagePath)));
 
                     callHangupButton->raise();
@@ -628,12 +591,9 @@ void AquarelloVideo::launchStateEnviroment(AQUA_STATE::AquarelloState state)
 
                     callHangupButton->setIcon(QIcon());
                     callHangupButton->setIcon(QIcon(endCallButtonImagePath));
-                    //callHangupButton->setIconSize(QSize(100, 50));
                     callHangupButton->setIconSize(QImage(endCallButtonImagePath).size());
                     callHangupButton->resize(QImage(endCallButtonImagePath).size());
                     resizeCallHangupButton();
-                    //callHangupButton->setIconSize(QSize(callHangupButton->width(), callHangupButton->height()));
-                    //callHangupButton->resize(QImage(endCallButtonImagePath).size());
 
                     callHangupButton->raise();
                     wait_response->stackUnder(callHangupButton);
@@ -690,7 +650,6 @@ void AquarelloVideo::timeOutInterruption()
 {
     qDebug() << "timeOutInterruption: "<< aqState;
     if(aqState == AQUA_STATE::TABLE_CALLER){
-        //aqState=AQUA_STATE::CATALOG_PICTURE;
         aqState=AQUA_STATE::WELCOME;
     }
     setStateEnviroment(aqState);
@@ -726,7 +685,6 @@ void AquarelloVideo::onCallReleased()
     }
     timer->start();
 
-    //aqState=AQUA_STATE::CATALOG_PICTURE;
     aqState=AQUA_STATE::WELCOME;
     setStateEnviroment(aqState);
     launchStateEnviroment(aqState);
@@ -758,7 +716,6 @@ void AquarelloVideo::onTableCaller()
         aqState=AQUA_STATE::TABLE_CALLER;
         setStateEnviroment(aqState);
         launchStateEnviroment(aqState);
-        //timer->start(); //add
         break;
 
     case AQUA_STATE::TABLE_CALLER:
@@ -767,7 +724,6 @@ void AquarelloVideo::onTableCaller()
         }
         timer->start();
 
-        //aqState=AQUA_STATE::CATALOG_PICTURE;
         aqState=AQUA_STATE::WELCOME;
         setStateEnviroment(aqState);
         launchStateEnviroment(aqState);
@@ -1004,11 +960,6 @@ void AquarelloVideo::onCallButton_10()
 
 void AquarelloVideo::onHangupButton()
 {
-/*    this->callHangupButton->setIcon(QIcon(sellerButtonImagePath));
-    callHangupButton->setIconSize(QImage(sellerButtonImagePath).size());
-    callHangupButton->resize(QImage(sellerButtonImagePath).size());
-    resizeCallHangupButton();
-*/    //
     this->EnableButton = TRUE;
 
     if (phoneWidget->IncomingEnabled){
@@ -1020,7 +971,6 @@ void AquarelloVideo::onHangupButton()
 }
 void AquarelloVideo::onAnswerButton()
 {
-    //this->phoneWidget->phone->IncomingEnabled = FALSE;
     this->callHangupButton->setIcon(QIcon(endCallButtonImagePath));
     callHangupButton->setIconSize(QImage(endCallButtonImagePath).size());
     callHangupButton->resize(QImage(endCallButtonImagePath).size());
@@ -1028,11 +978,9 @@ void AquarelloVideo::onAnswerButton()
     this->EnableButton = FALSE;
 
     if (phoneWidget->IncomingEnabled){
-        //emit signalCallHangup("HangupIncomingCall");
         phoneWidget->evento="AcceptingIncomingCall";
     }
     else{
-        //emit signalCallHangup("Hangup");
         phoneWidget->evento="Hangup";
     }
 }

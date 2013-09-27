@@ -6,10 +6,10 @@
         <usingSoftPhone>1</usingSoftPhone>
         <usingBarcodeScanner>1</usingBarcodeScanner>
 	<Terminal>AQUARELLE</Terminal>
-        <ServerIP>192.168.100.13</ServerIP>
+        <ServerIP>192.168.100.3</ServerIP>
 	<ServerPort>1234</ServerPort>
-        <TimeCode>5</TimeCode>
-        <TimeSlide>2</TimeSlide>
+        <TimeCode>10</TimeCode>
+        <TimeSlide>10</TimeSlide>
 	<BaseURL>http://localhost/cgi-bin/demo.cgi?gencode=</BaseURL>
         <Orientation>portrait</Orientation>
     </aquarelloSettings>

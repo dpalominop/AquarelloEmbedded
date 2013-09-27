@@ -15,10 +15,8 @@ WidgetViewer::WidgetViewer(QWidget *parent) :
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     AqVideo = new AquarelloVideo;
-    //AqVideo->setParent(this, Qt::Window);
     AqVideo->setWindowFlags(Qt::Window);
     WidgetItem = Scene.addWidget(AqVideo);
-    //Scene.addItem(WidgetItem);
 
     QSize displaySize = QApplication::desktop()->screenGeometry(this).size();
     qDebug() << "displaySize: " << displaySize;

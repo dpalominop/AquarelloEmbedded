@@ -67,18 +67,27 @@ void BarcodeCatalog::queryCatalog(QString barcode)
         timer->start();
         return;
 
+    }else if(codigo=="3040521760554"){
+        emit queryReceived();
+
+        ReadCodeStatus(VIEW_FILE);
+        if(timer->isActive()){
+            qDebug() << "timer stop";
+            timer->stop();
+        }
+        timer->start();
+        return;
+
     }
 
-    qDebug() << "inicial query **************";
     emit queryReceived();
     emit startServerConsulting(codigo);
-    qDebug() << "paso startServerConsulting" << endl;
     serialCom->serialClear();
 }
 
 
 void BarcodeCatalog::serverConsulting(QString codigo)
-{qDebug() << "INCIA SERVER-CONSULTING";
+{
     if (QString::compare(settings->terminal,"Aquarelle",Qt::CaseInsensitive) == 0)
     {
         TcpClient *tcpclient = new TcpClient();
@@ -201,7 +210,7 @@ void BarcodeCatalog::serverConsulting(QString codigo)
              emit catalogTimeout();
         }
         delete tcpclient;
-    }qDebug() << "FINALIZO SERVER-CONSULTING";
+    }
 }
 
 void BarcodeCatalog::init()
