@@ -34,7 +34,8 @@ void BarcodeCatalog::queryCatalog(QString barcode)
     }
     remote=false;
     qDebug() << "Barcode Catalog : " << codigo << endl;
-    QMetaObject::invokeMethod(this,"startSound", Qt::DirectConnection);
+    emit startSound();
+    //QMetaObject::invokeMethod(this,"startSound", Qt::DirectConnection);
 
     if(codigo=="769903002503")
     {
