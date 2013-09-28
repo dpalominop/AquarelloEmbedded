@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     //qInstallMessageHandler(LogHandler);
-    stdout = freopen("log.txt", "a+", stdout);
+    //stdout = freopen("log.txt", "a+", stdout);
 
     qDebug() << "QApp Created" << endl;
     app.setApplicationName("AquarelloVideo");
