@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<scanner>
+    <scannerSettings>
+        <serialBaudRate>9600</serialBaudRate>
+        <serialPort>/dev/ttyACM0</serialPort>
+    </scannerSettings>
+</scanner>

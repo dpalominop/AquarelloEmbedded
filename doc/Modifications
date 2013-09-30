@@ -1,0 +1,37 @@
+==========
+2012-09-10
+==========
+
+1. Got function "int Main()" out of vidgui.cpp,  put it in main.cpp.  Put "static pjsip_module mod_default_handler" in main.cpp aswell.
+
+2. vin class MainWin, declared "QVBoxLayout *vbox_righ" as private member.
+
+3. Alignments set to top in main window:
+
+	hbox_main->setAlignment( vbox_left, Qt::AlignTop);
+
+	hbox_main->setAlignment( vbox_right, Qt::AlignTop);
+
+
+
+4. Added buttons to Main Window:
+
+    vbox_right->addWidget((catalogButton_=new QPushButton(tr("Catalog"))));
+    vbox_right->addWidget((barCodeInterruptionButton_=new QPushButton(tr("Bar Code"))));
+
+5. Created Class BarcodeInterruption
+
+6. Created Signal connect(barCodeInterruptionButton_, SIGNAL(clicked()), this, SLOT(onBarCodeInterruption())); in MAINWIN class.
+
+
+==========
+2012-09-11
+==========
+
+1. Bar Code Interruption Button
+
+TODO:
+
+1. Fix Button QUIT() (if used after calling, it freezes the app)
+
+2. Create a Main Window (rename class MainWin to VideoCall)

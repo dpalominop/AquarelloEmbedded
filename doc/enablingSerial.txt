@@ -1,0 +1,4 @@
+if you want to open Serial Port without using SUDO,
+type in terminal:
+
+sudo adduser [USERNAME] dialout

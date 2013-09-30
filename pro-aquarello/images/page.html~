@@ -1,0 +1,184 @@
+<style type="text/css">
+body {
+  font: 12px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+pre,
+code {
+  font-family: 'DejaVu Sans Mono', Monaco, Consolas, monospace;
+}
+
+hr {
+  border: 0 #ededed solid;
+  border-top-width: 1px;
+  clear: both;
+  height: 0;
+  margin: 0;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+  font-size: 25px;
+}
+
+h2 {
+  font-size: 23px;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+h4 {
+  font-size: 19px;
+}
+
+h5 {
+  font-size: 17px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+.slide-title-normal {
+	color: #414141;
+	text-transform: capitalize;
+	line-height: 44px;
+	letter-spacing: -0.04em;
+	font-size: 40px;
+	font-weight: 600;
+}
+
+.slide-title-big {
+	color: #414141;
+	text-transform: capitalize;
+	line-height: 60px;
+	text-indent: -6px;
+	letter-spacing: -0.04em;
+	font-size: 90px;
+	font-weight: bold;
+}
+
+.slide-subtitle-normal {
+	line-height: 20px;
+	font-size: 13px;
+	font-weight: 400;	
+}
+
+.slide-subtitle-big {
+	line-height: 23px;
+	font-size: 18px;
+	font-weight: 400;
+}
+
+#page-title-wrapper {
+	
+	/*background: #f7f7f7;*/
+	filter: alpha(opacity=50);	
+	opacity: 0.7;
+	-moz-opacity:0.7;
+	-khtml-opacity: 0.7;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f7f7f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7));
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -o-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	position: fixed;
+	top: 20%;
+  	left: 0%;
+	width:100%;
+	
+}
+
+#pager-wrapper{
+	opacity: 0.6;
+	-moz-opacity:0.6;
+	-khtml-opacity: 0.6;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f7f7f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7));
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -o-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	position: fixed;
+	bottom: 0%;
+  	left: 0%;
+	width:100%;
+}
+
+
+#sponsor-wrapper{
+	opacity: 0.8;
+	-moz-opacity:0.8;
+	-khtml-opacity: 0.8;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f7f7f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7));
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -o-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	background: linear-gradient(top,  #ffffff 0%,#f7f7f7 100%);
+	position: fixed;
+	top: 0%;
+  	right: 0%;
+	width:30%;
+}
+
+#background{
+	padding:0px;
+}
+
+#sponsor{
+	text-align:center;
+}
+#commentsponsor{
+	text-align:center;
+}
+
+#product{
+	position:fixed;
+	top:10px;
+	left:100px;
+}
+#product-detail{
+	position:fixed;
+	top:100px;
+	left:100px;
+
+}
+#company{
+        position:fixed;
+        bottom:5px;
+        right:0px;
+}
+</style>
+<html>
+<div>
+<div id="background"></div>
+</div>
+<div id="page-title-wrapper">
+	<div id="title" class="slide-title-big"><br></div>
+	<div id="slogan" class="slide-title-normal" width="100%"><p></p></div>
+</div>
+<div id="sponsor-wrapper">
+	<div id="sponsor" class="slide-title-normal"></div>
+	<div id="imagesponsor"></div>
+	<div id="commentsponsor" class="slide-subtitle-big"></div>
+</div>
+
+
+<div id="pager-wrapper">
+	<div id="company">Powered by: TCC PERU <br> Develorper: Pablo Crovetto, jpcc077@gmail.com</div>
+	<div id="comment" class="slide-subtitle-big"></div>
+</div>
+
+<div>
+<div id="product" class="slide-title-normal"></div>
+<div id="product-detail" class="slide-subtitle-big"></div>
+</div>
+</html>

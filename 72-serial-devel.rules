@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", SYMLINK+="ttyACM0", OWNER="dpalominop", GROUP="dpalominop", MODE="0666"

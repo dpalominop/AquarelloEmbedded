@@ -1,0 +1,461 @@
+#include "display.h"
+
+Display::Display(QObject *parent) :
+    QObject(parent)
+{
+
+}
+void Display::strData(QString str)
+{
+	strdata = str;
+}
+void Display::setBackImgPath(QString path)
+{
+    backImgPath = path;
+}
+void Display::setForeImgPath(QString path)
+{
+    foreImgPath = path;
+}
+
+void Display::createDisplayPage(QString htmlpage)
+{
+        //QString PATH =QCoreApplication::applicationDirPath();
+	QFile file(htmlpage);
+	file.open(QIODevice::WriteOnly | QIODevice::Text);
+	QTextStream out(&file);
+	out << headScriptHTML();
+	QList<QString> list;
+	list << "<BODY>\n";
+	list.append("<div id='page-background'>\n");
+        if(backImgPath.count() > 0){
+            list.append(QString("<img src='%1' width='100\%' height='100\%'>\n").arg(backImgPath));
+        }
+	list.append("</div>\n");
+	list.append("<div id=\"content\">\n");
+	//bool status=1;
+	//char buf[1024];
+	//char buftmp[100];
+	//char *ptri,*ptrf,*ptrz;
+	//int n;
+	int posi=0;
+	int posf,command;
+	
+	//ptri=buf;
+	bool status=1;
+	QString tmp;
+	//strcpy(buf, strdata.toLocal8Bit().constData());
+	//strcpy(buf, strdata.toUtf8().constData());
+	//qDebug() << strdata;
+	while(status){
+	    if((posf=strdata.indexOf('\t', posi)) < 0){
+                break;
+            }
+	    tmp = strdata.mid(posi, posf-posi);
+	    command=tmp.toInt();		
+	    switch(command)
+	    {
+
+		case 25:
+		{
+			QStringList msglist;
+			int pos11=posf+1;
+                        int pos12;
+                        for (int i=0; i<10; i++){
+                            if(i==9){
+                                if((pos12=strdata.indexOf('\n', pos11)) > 0){
+                                     msglist.append(strdata.mid(pos11, pos12-pos11));
+                                }else{
+                                }
+                             }else{
+                                if((pos12=strdata.indexOf('\t', pos11)) > 0){
+                                     msglist.append(strdata.mid(pos11, pos12-pos11));
+                                }else{
+
+                             }
+                          }
+                          pos11=pos12+1;
+                        }
+                        posi=pos11;
+                        //qDebug() << msglist[9];
+
+			int effect = msglist[8].toInt();
+			switch(effect)
+			{
+				case 0:
+					list.append(QString("<SPAN style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+					break;
+				case 1:
+					list.append(QString("<blink style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+                                        break;
+				case 2:
+					list.append(QString("<MARQUEE style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+                                        break;
+				default:
+					break;
+			}
+			list.append(backgroundColor(msglist[2]));
+			list.append(foregroundColor(msglist[3]));
+			list.append(QString("font-size:%1pt;").arg(msglist[4]));
+			list.append("font-family:arial;");
+			list.append(styleFont(msglist[5]));
+                        //qDebug() << msglist[9];
+			if(msglist[9].indexOf((char)0xa4) > 0){
+				msglist[9] = msglist[9].replace(QChar('\xA4'),QString("&#8364;"));
+			}
+			if(msglist[9].indexOf("&#164;") > 0){
+				msglist[9] = msglist[9].replace(QString("&#164;"),QString("&#8364;"));
+			}
+			//QString text = msglist[9].replace(QChar('\xA4'),QString("&#8364"));
+			//qDebug() << text;
+			switch(effect){
+                        	case 0:
+                                	list.append(QString("'>\n%1\n</SPAN>\n").arg(msglist[9]));
+                                	break;
+                        	case 1:
+                                	list.append(QString("'>\n%1\n</blink>\n").arg(msglist[9]));
+                                	break;
+                        	case 2:
+                                	list.append(QString("'>\n%1\n</MARQUEE>\n").arg(msglist[9]));
+                                	break;
+                        	default:
+                                	list.append(QString("'>\n%1\n</SPAN>\n").arg(msglist[9]));
+                                	break;
+                    	}
+
+			break;
+		}
+		default:
+			//ptri+=1;
+			status=false;
+			break;	
+	    }
+	}
+	list.append("</div>\n");
+        list.append("</BODY>\n");
+        list.append("</HTML>\n");
+	QString result = "";
+        QString s;
+        foreach( s, list )
+        	result +=s;
+        out << result;
+	file.close();
+	
+}
+QString Display::backgroundColor(QString color)
+{
+	if (QString::compare(color,"0",Qt::CaseInsensitive) == 0) return "background-color:transparent;";
+        else if (QString::compare(color,"5",Qt::CaseInsensitive) == 0) return "background-color:yellow;border-radius:15px;padding:5px;";
+        else if (QString::compare(color,"35",Qt::CaseInsensitive) == 0) return "background-color:red;border-radius:15px;padding:5px;";
+        else if (QString::compare(color,"185",Qt::CaseInsensitive) == 0) return "background-color:green;border-radius:15px;padding:5px;";
+        else if (QString::compare(color,"206",Qt::CaseInsensitive) == 0) return "background-color:blue;border-radius:15px;padding:5px;";
+        else if (QString::compare(color,"215",Qt::CaseInsensitive) == 0) return "background-color:black;border-radius:15px;padding:5px;";
+        else return "background-color:red;border-radius:15px;padding:5px;";
+}
+QString Display::foregroundColor(QString color)
+{
+        if (QString::compare(color,"0",Qt::CaseInsensitive) == 0) return "color:transparent;";
+        else if (QString::compare(color,"5",Qt::CaseInsensitive) == 0) return "color:yellow;";
+        else if (QString::compare(color,"35",Qt::CaseInsensitive) == 0) return "color:red;";
+        else if (QString::compare(color,"185",Qt::CaseInsensitive) == 0) return "color:green;";
+        else if (QString::compare(color,"206",Qt::CaseInsensitive) == 0) return "color:blue;";
+        else if (QString::compare(color,"215",Qt::CaseInsensitive) == 0) return "color:black;";
+        else return "color:red;";
+}
+QString Display::styleFont(QString style)
+{
+	if (QString::compare(style,"0",Qt::CaseInsensitive) == 0) return "font-style:normal;";
+	else if(QString::compare(style,"1",Qt::CaseInsensitive) == 0) return "font-style:italic;";
+	else if(QString::compare(style,"2",Qt::CaseInsensitive) == 0) return "font-weight:bold;";
+	else return "font-style:normal;";
+}
+void Display::createWelcomePage(QString welcomepage)
+{
+    int posi=0;
+    int posf,pos1,command;
+    bool status=1;
+    QString tmp;
+    int len = strdata.length();
+    int cnt=0;
+    QStringList msglist;
+    //qDebug() << QString("%1").arg(strdata.count());
+    msg=new WelcomeConfiguration();
+    if(strdata.count() > 0){
+        if(QString::compare(msg->getMsgVisible(),"true",Qt::CaseInsensitive) == 0){
+            while(status){
+                if(cnt >= len){
+                    break;
+                }
+                if((posf=strdata.indexOf('\t', posi)) < 0){
+                    break;
+                }
+                tmp = strdata.mid(posi, posf-posi);
+                        //qDebug() << "command="+tmp;
+                command=tmp.toInt();
+                switch(command)
+                {
+                    case 19:
+                        if((pos1=strdata.indexOf('\n', posf+1)) >= 0){
+                                    }else{
+                        }
+                        posi=pos1+1;
+                        break;
+
+                    case 20:
+                    {
+                        int pos11=posf+1;
+                        int pos12;
+                        for (int i=0; i<10; i++){
+                            if(i==9){
+                                if((pos12=strdata.indexOf('\n', pos11)) >= 0){
+                                    //msglist.append(strdata.mid(pos11, pos12-pos11));
+                                }else{
+                                }
+                            }else{
+                                if((pos12=strdata.indexOf('\t', pos11)) >= 0){
+                                    //msglist.append(strdata.mid(pos11, pos12-pos11));
+                                }else{
+                                }
+                            }
+                            pos11=pos12+1;
+                        }
+                        posi=pos11;
+                        break;
+                    }
+                    case 21:
+                    {
+                        int pos21=posf+1;
+                        //qDebug() << "DATA="+strdata.mid(pos21);
+                        int pos22;
+                        for (int i=0; i<10; i++){
+                            if(i==9){
+                                if((pos22=strdata.indexOf('\n', pos21)) >= 0){
+                                    msglist.append(strdata.mid(pos21, pos22-pos21));
+                                }else{
+                                }
+                            }else{
+                                if((pos22=strdata.indexOf('\t', pos21)) >= 0){
+                                    msglist.append(strdata.mid(pos21, pos22-pos21));
+                                }else{
+                                }
+                            }
+                            pos21=pos22+1;
+                        }
+                        posi=pos21;
+                        break;
+                    }
+                    default:
+                        status=false;
+                        break;
+                        }
+                        cnt++;
+                    }
+                    //QString PATH =QCoreApplication::applicationDirPath();
+                    QFile file(welcomepage);
+                    file.open(QIODevice::WriteOnly | QIODevice::Text);
+                    QTextStream out(&file);
+                    out << headScriptHTML();
+                    QList<QString> list;
+                    list << "<BODY>\n";
+                    list.append("<div id='page-background'>\n");
+                    if(foreImgPath.count() > 0){
+                        list.append(QString("<img src='%1' width='100\%' height='100\%'>\n").arg(foreImgPath));
+                    }
+                    list.append("</div>\n");
+                    list.append("<div id=\"content\">\n");
+                    int effect = msglist[8].toInt();
+                    switch(effect)
+                    {
+                            case 0:
+                                    list.append(QString("<SPAN style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+                                    break;
+                            case 1:
+                                    list.append(QString("<blink style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+                                    break;
+                            case 2:
+                                    list.append(QString("<MARQUEE style='position:absolute;left:%1px;top:%2px;").arg(msglist[0]).arg(msglist[1]));
+                                    break;
+                            default:
+                                    break;
+                    }
+                    list.append(backgroundColor(msglist[2]));
+                    list.append(foregroundColor(msglist[3]));
+                    list.append(QString("font-size:%1pt;").arg(msglist[4]));
+                    list.append("font-family:arial;");
+                    list.append(styleFont(msglist[5]));
+                    qDebug() << msglist[9];
+                    if(msglist[9].indexOf((char)0xa4) > 0){
+                            msglist[9] = msglist[9].replace(QChar('\xA4'),QString("&#8364"));
+                    }
+                    if(msglist[9].indexOf("&#164;") > 0){
+                            msglist[9] = msglist[9].replace(QString("&#164;"),QString("&#8364;"));
+                    }
+                    switch(effect){
+                            case 0:
+                                    list.append(QString("'>\n%1\n</SPAN>\n").arg(msglist[9]));
+                                    break;
+                            case 1:
+                                    list.append(QString("'>\n%1\n</blink>\n").arg(msglist[9]));
+                                    break;
+                            case 2:
+                                    list.append(QString("'>\n%1\n</MARQUEE>\n").arg(msglist[9]));
+                                    break;
+                            default:
+                                    list.append(QString("'>\n%1\n</SPAN>\n").arg(msglist[9]));
+                                    break;
+                    }
+                    list.append("</div>\n");
+                    list.append("</BODY>\n");
+                    list.append("</HTML>\n");
+                    QString result = "";
+                    QString s;
+                    foreach( s, list )
+                            result +=s;
+                    out << result;
+                    file.close();
+        }else{
+            //QString PATH =QCoreApplication::applicationDirPath();
+            QFile file(welcomepage);
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
+            QTextStream out(&file);
+            out << headScriptHTML();
+            QList<QString> list;
+            list << "<BODY>\n";
+            list.append("<div id='page-background'>\n");
+            if(foreImgPath.count() > 0){
+                list.append(QString("<img src='%1' width='100\%' height='100\%'>\n").arg(foreImgPath));
+            }
+            list.append("</div>\n");
+            list.append("<div id=\"content\">\n");
+            list.append("</div>\n");
+            list.append("</BODY>\n");
+            list.append("</HTML>\n");
+            QString result = "";
+            QString s;
+            foreach( s, list )
+                    result +=s;
+            out << result;
+            file.close();
+
+        }
+    }else{
+            if(QString::compare(msg->getMsgVisible(),"true",Qt::CaseInsensitive) == 0){
+                //QString PATH =QCoreApplication::applicationDirPath();
+                QFile file(welcomepage);
+		file.open(QIODevice::WriteOnly | QIODevice::Text);
+		QTextStream out(&file);
+		out << headScriptHTML();
+		QList<QString> list;
+		list << "<BODY>\n";
+		list.append("<div id='page-background'>\n");
+                if(foreImgPath.count() > 0){
+                    list.append(QString("<img src='%1' width='100\%' height='100\%'>\n").arg(foreImgPath));
+                }
+		list.append("</div>\n");
+		list.append("<div id=\"content\">\n");
+		QString effect = msg->getMsgEffect();
+		if(QString::compare(effect,"Normal",Qt::CaseInsensitive) == 0){
+			list.append(QString("<SPAN style='position:absolute;left:%1px;top:%2px;").arg(msg->getMsgX()).arg(msg->getMsgY()));
+		}else if(QString::compare(effect,"Blink",Qt::CaseInsensitive) == 0){
+			list.append(QString("<blink style='position:absolute;left:%1px;top:%2px;").arg(msg->getMsgX()).arg(msg->getMsgY()));
+		}else if(QString::compare(effect,"Scroll",Qt::CaseInsensitive) == 0){
+			list.append(QString("<MARQUEE style='position:absolute;left:%1px;top:%2px;").arg(msg->getMsgX()).arg(msg->getMsgY()));
+		}else{
+			list.append(QString("<SPAN style='position:absolute;left:%1px;top:%2px;").arg(msg->getMsgX()).arg(msg->getMsgY()));
+		}
+		if(QString::compare(msg->getMsgForeColor(),"ffffff",Qt::CaseInsensitive) == 0){
+			list.append("background-color:transparent;");
+		}else{
+			list.append(QString("background-color:#%1;").arg(msg->getMsgForeColor()));
+		}
+		list.append(QString("color:#%1;").arg(msg->getMsgColor()));
+                list.append(QString("font-size:%1pt;").arg(msg->getMsgSize()));
+                list.append("font-family:arial;");
+                list.append(QString("font-style:%1;").arg(msg->getMsgStyle()));
+                list.append(QString("font-weight:%1;").arg(msg->getMsgWeight()));
+		
+		if(QString::compare(effect,"Normal",Qt::CaseInsensitive) == 0){
+			list.append(QString("'>\n%1\n</SPAN>\n").arg(msg->getMsgTxt()));
+		}else if(QString::compare(effect,"Blink",Qt::CaseInsensitive) == 0){
+			list.append(QString("'>\n%1\n</blink>\n").arg(msg->getMsgTxt()));
+		}else if(QString::compare(effect,"Scroll",Qt::CaseInsensitive) == 0){
+			list.append(QString("'>\n%1\n</MARQUEE>\n").arg(msg->getMsgTxt()));
+		}else{
+			list.append(QString("'>\n%1\n</SPAN>\n").arg(msg->getMsgTxt()));
+		}
+		list.append("</div>\n");
+		list.append("</BODY>\n");
+		list.append("</HTML>\n");
+
+		QString result = "";
+		QString s;
+	        foreach( s, list )
+        	        result +=s;
+		out << result;
+		file.close();
+            }else{
+                //QString PATH =QCoreApplication::applicationDirPath();
+                QFile file(welcomepage);
+                file.open(QIODevice::WriteOnly | QIODevice::Text);
+                QTextStream out(&file);
+                out << headScriptHTML();
+                QList<QString> list;
+                list << "<BODY>\n";
+                list.append("<div id='page-background'>\n");
+                if(foreImgPath.count() > 0){
+                    list.append(QString("<img src='%1' width='100\%' height='100\%'>\n").arg(foreImgPath));
+                }
+                list.append("</div>\n");
+                list.append("<div id=\"content\">\n");
+                list.append("</div>\n");
+                list.append("</BODY>\n");
+                list.append("</HTML>\n");
+                QString result = "";
+                QString s;
+                foreach( s, list )
+                        result +=s;
+                out << result;
+                file.close();
+            }
+    }
+}
+QString Display::headScriptHTML()
+{
+	QList<QString> list;
+	QString result = "";
+	list << "<HTML>\n";
+        list.append("<HEAD>\n");
+        list.append("<SCRIPT type=\"text/javascript\">\n");
+        list.append("<!--\n");
+        list.append("speed=750;\n");
+        list.append("blink=document.all.tags(\"blink\");\n");
+        list.append("swi=1;\n");
+        list.append("bringBackBlinky();\n");
+        list.append("function bringBackBlinky() {\n");
+        list.append("if (swi == 1) {\n");
+        list.append("sho=\"visible\";\n");
+        list.append("swi=0;\n");
+        list.append("}\n");
+        list.append("else {\n");
+        list.append("sho=\"hidden\";\n");
+        list.append("swi=1;\n");
+        list.append("}\n");
+        list.append("for(i=0;i<blink.length;i++) {\n");
+        list.append("blink[i].style.visibility=sho;\n");
+        list.append("}\n");
+        list.append("setTimeout(\"bringBackBlinky()\", speed);\n");
+        list.append("}\n");
+        list.append("// -->\n");
+        list.append("</SCRIPT>\n");
+        list.append("<style type=\"text/css\">\n");
+        list.append("body {height:100%; margin:0; padding:0;}\n");
+        list.append("#page-background {position:fixed; top:0; left:0; width:100%; height:100%;}\n");
+        list.append("#content {position:relative; z-index:1;padding:0px;}\n");
+        list.append("</style>\n");
+        list.append("</HEAD>\n");
+
+	QString s;
+	foreach( s, list )
+		result +=s;        
+	return result;
+}

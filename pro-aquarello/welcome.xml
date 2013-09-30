@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Message>
+<WelcomeMsgTxt>GEMPSY-TCC</WelcomeMsgTxt>
+<WelcomeMsgX>250</WelcomeMsgX>
+<WelcomeMsgY>200</WelcomeMsgY>
+<WelcomeMsgForecolor>53E61E</WelcomeMsgForecolor>
+<WelcomeMsgColor>F51E0F</WelcomeMsgColor>
+<WelcomeMsgSize>40</WelcomeMsgSize>
+<WelcomeMsgEffect>Fixed</WelcomeMsgEffect>
+<WelcomeMsgStyle>Normal</WelcomeMsgStyle>
+<WelcomeMsgWeight>Normal</WelcomeMsgWeight>
+<WelcomeMsgVisible>true</WelcomeMsgVisible>
+</Message>
