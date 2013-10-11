@@ -74,10 +74,11 @@ AquarelloVideo::AquarelloVideo(QWidget *parent)
             QObject::connect( this->phoneWidget, SIGNAL(signalConnectedCall()), this, SLOT(onCall()), Qt::DirectConnection );
             QObject::connect( this->phoneWidget, SIGNAL(signalIncomingCall()), this, SLOT(inCall()), Qt::DirectConnection );
 
-            QObject::connect(thread, SIGNAL(started()), phoneWidget, SLOT(process()));
-            QObject::connect(phoneWidget, SIGNAL(finished()), thread, SLOT(quit()) );
-            QObject::connect(phoneWidget, SIGNAL(finished()), phoneWidget, SLOT(deleteLater()));
-            QObject::connect(phoneWidget, SIGNAL(destroyed()), thread, SLOT(deleteLater()) );
+            connect(this, SIGNAL(startThread()), phoneWidget, SLOT(process()));
+            emit startThread();
+
+            connect(phoneWidget, SIGNAL(RegistrationOk()), this, SLOT(onRegistrationOk()));
+            connect(phoneWidget, SIGNAL(RegistrationFailed()), this, SLOT(onRegistrationFailed()));
 
     }
     if(settings->usingVideoCatalog)
@@ -107,10 +108,10 @@ AquarelloVideo::~AquarelloVideo()
 
     if(settings->usingSoftPhone)
         phoneWidget->exitSoftphone = TRUE;
+
     delay(3);
     qApp->quit();
     this->deleteLater();
-
 }
 
 void AquarelloVideo::initLayout()
@@ -342,7 +343,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(true);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -354,7 +355,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(false);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(true);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -365,7 +366,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             welcome_catalog->setHidden(true);
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(false);
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(true);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -389,7 +390,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(true);
             if(settings->usingSoftPhone)        widgetcall->setHidden(false);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -401,7 +402,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(false);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -414,7 +415,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(false);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -427,7 +428,7 @@ void AquarelloVideo::setStateEnviroment(AQUA_STATE::AquarelloState aqState)
             if(settings->usingPictureCatalog)   picture_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->setHidden(true);
             if(settings->usingVideoCatalog)     video_catalog->stopPlaylist();
-            if(settings->usingSoftPhone)        callHangupButton->setHidden(false);
+            if(settings->usingSoftPhone)        if(RegSoft) callHangupButton->setHidden(false);
             if(settings->usingSoftPhone)        wait_response->setHidden(false);
             if(settings->usingSoftPhone)        widgetcall->setHidden(true);
             if(settings->usingBarcodeScanner)   barcode_catalog->setHidden(true);
@@ -758,6 +759,18 @@ void AquarelloVideo::onTablereturn()
         timer->stop();
         if(!timer->isActive())  timer->start();
     }
+}
+
+void AquarelloVideo::onRegistrationFailed()
+{
+    callHangupButton->setHidden(true);
+    RegSoft=false;
+}
+
+void AquarelloVideo::onRegistrationOk()
+{
+    callHangupButton->setHidden(false);
+    RegSoft=true;
 }
 
 void AquarelloVideo::onCallButton_01()

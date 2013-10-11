@@ -31,6 +31,8 @@ static bool_t running=TRUE;
 static LinphoneCall *call = NULL;
 static LinphoneCore *lc = NULL;
 
+static LinphoneRegistrationState l_state=LinphoneRegistrationNone;
+
 static void stop(int signum){
     qDebug() << "STOP";
         running=FALSE;
@@ -39,9 +41,7 @@ static void registration_state_changed(struct _LinphoneCore *lc, LinphoneProxyCo
                 qDebug() << "New registration state "<< linphone_registration_state_to_string(cstate)
                          << "for user id" << linphone_proxy_config_get_identity(cfg)
                          << "at proxy " << linphone_proxy_config_get_addr(cfg) << endl;
-
-
-
+                l_state = cstate;
 }
 
 static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCallState cstate, const char *msg){
@@ -276,6 +276,9 @@ signals:
     void signalEndCall();
     void signalHangup();
     void finished();
+    void RegistrationFailed();
+    void RegistrationOk();
+
 public slots:
     void process(void);
     void finSoft();

@@ -70,6 +70,7 @@ signals:
     //SoftphoneWidget
     void signalCallHangup(QString);
     void stopThread();
+    void startThread();
 
 public slots:
     void onBarCodeInterruption();
@@ -97,6 +98,8 @@ public slots:
     void onEndCall();
     void onTableCaller();
     void onTablereturn();
+    void onRegistrationFailed();
+    void onRegistrationOk();
 
 private:
     static AquarelloVideo *theInstance_;
@@ -137,6 +140,8 @@ private:
     QString returnBackImagePath;
     QString callButtonVideImagePath;
     QString mainIconImagePath;
+
+    bool RegSoft=false;
 };
 
 
